@@ -1,0 +1,32 @@
+body {
+    background-color: #F3F3F3;
+}
+
+
+.form-signin {
+    max-width: 330px;
+    padding: 1rem;
+    background-color: #FAD76C;
+    border-radius: 10px;
+  }
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+  }
+  
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.button-corail {
+    background-color: #FF7848;
+    color:#ffffff;
+}
