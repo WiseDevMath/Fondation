@@ -1,26 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 <form method="post">
+
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-
     <main class="form-signin w-100 m-auto">
 
-        <h1 class="h3 mb-3 font-weight-normal">{{ "Sign in" | trans }}</h1>
+        <h1 class="h4 mb-3 font-weight-normal">{{ "Sign in" | trans }}</h1>
 
         <div class="form-floating">            
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="">
-            <label for="inputUsername">{{ 'Username' | trans }}</label> 
+            <label for="inputUsername">{{ 'Username or Email' | trans }}</label> 
         </div>
 
         <div class="form-floating  toggle-password-container"> 
@@ -43,7 +38,7 @@
             </label>
         </div>
 
-        <button class="btn btn-lg button-corail" type="submit">
+        <button class="btn button-corail" type="submit">
             {{ 'Validate' | trans }}
         </button>
     </main> 

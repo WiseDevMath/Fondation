@@ -1,12 +1,13 @@
 body {
     background-color: #F3F3F3;
+    padding-top: 4.5rem;
 }
 
 
 .form-signin {
     max-width: 330px;
     padding: 1rem;
-    background-color: #FAD76C;
+    background-color: #ffe9a6;
     border-radius: 10px;
   }
 
@@ -43,3 +44,33 @@ body {
   /* Ajoutez vos styles personnalisés ici */
   margin-top: 30px;
 }
+
+.site-header {
+  background-color: #ffffff;
+  font-size: 18px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.site-footer {
+  background-color: #ffffff;
+  font-size: 18px;
+  border-top: 1px solid #dddddd;
+}
+
+.menu-actif {
+  color:#595959;
+  font-weight: bold;
+}
+.menu-actif:hover {
+  color:#595959;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.menu-inactif {
+  color:#595959;
+}
+.menu-inactif:hover {
+  color:#595959;
+  text-decoration: underline;
+}
+

@@ -12,10 +12,61 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
+
+    <script src="{{asset('bootstrap.bundle.min.js')}}"></script>
+
     <body>
-        <div class="container my-4" >
-            {# % include 'partiels/flash.html.twig' %#}
-            {% block body %}{% endblock %}
+          
+      <nav class="navbar navbar-expand-md  fixed-top  site-header">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li><a class="nav-link px-2 {{ app.current_route == 'home' ? 'menu-actif' : 'menu-inactif' }}" href="{{ path('home') }}">{{ "Home" | trans }}</a></li>
+                <li><a class="nav-link px-2 {{ app.current_route == 'Faq' ? 'menu-actif' : 'menu-inactif' }}" href="{{ path('home') }}">Faq</a></li>
+                <li><a class="nav-link px-2 {{ app.current_route == 'A propos' ? 'menu-actif' : 'menu-inactif' }}" href="{{ path('home') }}">A propos</a></li>
+            </ul>
+
+            
+            {% if not app.user %}
+            <div class="text-end">
+              <a href="{{ path('login') }}"><button type="button" class="btn button-corail ">{{ "Login" | trans }}</button></a>
+              <a href="{{ path('register') }}"><button type="button" class="btn button-corail ">{{ "Register" | trans }}</button></a>
+            </div>
+            {% else %}
+            <span class="badge align-items-center p-2 pe-3 text-light-emphasis bg-secondary-subtle border border-dark-subtle rounded-pill">
+              <img class="rounded-circle me-1" width="24" height="24" src="https://github.com/mdo.png" alt="">
+              {{ app.user.userIdentifier }}
+            </span>
+            <span class="mx-2"></span>
+            <a href="{{ path('logout') }}"><button type="button" class="btn button-corail ">{{ "Logout" | trans }}</button></a>
+            {% endif %}
+
+
+
+          </div>
         </div>
+    </nav>
+      
+        <main class="container" >
+            <div class="p-3">
+            {% include 'partiels/flash.html.twig' %}
+            {% block body %}{% endblock %}
+            </div>
+        </main>
+
+        <footer class="footer mt-auto py-2 bg-body-tertiary fixed-bottom site-footer ">
+          <div class="container">
+            <logo class="pull-right">
+              <a href="{{ path('home') }}" >
+                <img src="/Fondation/ressources/images/LogoWisedev.png" alt="Logo" height="40">
+              </a>
+            </logo>
+          </div>
+        </footer>
+
     </body>
 </html>

@@ -21,7 +21,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'login';
 
     public function __construct(private UrlGeneratorInterface $urlGenerator,private UserRepository $userRepository)
     {
@@ -46,10 +46,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+             return new RedirectResponse($targetPath);
         }
 
-       return new RedirectResponse('/Fondation');
+       return new RedirectResponse($this->urlGenerator->generate('home'));
 
     }
 

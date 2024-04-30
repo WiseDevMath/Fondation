@@ -18,8 +18,8 @@ security:
             provider: app_user_provider
             custom_authenticator: App\Security\AppAuthenticator
             logout:
-                path: app_logout
-
+                path: logout
+                target: home
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800

@@ -12,7 +12,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class HomeController extends AbstractController
 {
     #[Route('/','home')] 
-
     function index (Request $request,EntityManagerInterface $em, UserPasswordHasherInterface $hasher): Response {
     
         return $this->render('home/index.html.twig');
