@@ -16,16 +16,21 @@
 
     <main class="form-signin w-100 m-auto">
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">{{ "Sign in" | trans }}</h1>
 
         <div class="form-floating">            
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="">
-            <label for="inputUsername">Username</label> 
+            <label for="inputUsername">{{ 'Username' | trans }}</label> 
         </div>
 
-        <div class="form-floating">            
-            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="">
-            <label for="inputPassword">Password</label>
+        <div class="form-floating  toggle-password-container"> 
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="" 
+            {{ stimulus_controller('symfony/ux-toggle-password/toggle-password', { 
+                buttonClasses: ['toggle-password-button','toggle-password-button-login'],
+                visibleLabel: "Show" | trans ,
+                hiddenLabel: "Hide" | trans 
+              }) }} >
+            <label for="inputPassword">{{ 'Password' | trans }}</label>
         </div>
 
         <input type="hidden" name="_csrf_token"
@@ -34,15 +39,16 @@
 
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" name="_remember_me"> Remember me
+                <input type="checkbox" name="_remember_me">{{ 'Remember me' | trans }}
             </label>
         </div>
 
         <button class="btn btn-lg button-corail" type="submit">
-            Sign in
+            {{ 'Validate' | trans }}
         </button>
     </main> 
 </form>
+
 
 
 {% endblock %}

@@ -30,3 +30,16 @@ body {
     background-color: #FF7848;
     color:#ffffff;
 }
+
+.button-corail:hover, 
+.button-corail:active,
+.button-corail:focus,
+.button-corail:visited{
+    background-color:  #e06336; 
+    color:#dddddd;
+}
+
+.toggle-password-button-login {
+  /* Ajoutez vos styles personnalisés ici */
+  margin-top: 30px;
+}

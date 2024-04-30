@@ -1,0 +1,16 @@
+Welcome: Welcome
+Register: Register
+Sign in: "Sign in:"
+Username: "Username"
+Password: 'Password'
+Remember me: " Remember me"
+Show: Show
+Hide: Hide
+Validate: Validate
+registrationForm.username: Username
+registrationForm.email: Email
+registrationForm.plainPassword: Password
+registrationForm.agreeTerms: Agree terms
+registrationForm.saveButton: Register
+toogle_hidden_label: Hide
+toogle_visible_label: Show

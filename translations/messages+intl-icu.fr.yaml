@@ -1,0 +1,16 @@
+Welcome: Bienvenue
+Register: Inscription
+Sign in: "Se connecter"
+Username: "Nom d'utilisateur"
+Password: 'Mot de passe'
+Remember me: " Se souvenir de moi"
+Show: Voir
+Hide: Masquer
+Validate: Valider
+registrationForm.username: "Nom d'utilisateur"
+registrationForm.email: Courriel
+registrationForm.plainPassword: 'Mot de passe'
+registrationForm.agreeTerms: 'Accepter les conditions générales'
+registrationForm.saveButton: "S'enregistrer"
+toogle_hidden_label: Masquer
+toogle_visible_label: Voir
