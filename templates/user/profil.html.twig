@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre profil{% endblock %}
+
+{% block body %}
+
+<main class="form-medium w-100 m-auto">
+
+<h1 class="h4 mb-3 font-weight-normal">{{ "My Profile" | trans }}</h1>
+
+<div class="pb-2">
+
+    {% if user.thumbnail %} <img class="rounded-circle me-1" width="80" height="80"  src="{{ vich_uploader_asset(user,'thumbnailFile')}}" alt="">
+    {% else %} <img src="/Fondation/ressources/images/defaultProfil.png" width="80" height="80" > 
+    {% endif %}
+    
+</div>
+
+{{ form(form) }}
+
+</main>
+
+{% endblock %}

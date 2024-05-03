@@ -29,7 +29,6 @@
                 <li><a class="nav-link px-2 {{ app.current_route == 'Faq' ? 'menu-actif' : 'menu-inactif' }}" href="{{ path('home') }}">Faq</a></li>
                 <li><a class="nav-link px-2 {{ app.current_route == 'A propos' ? 'menu-actif' : 'menu-inactif' }}" href="{{ path('home') }}">A propos</a></li>
             </ul>
-
             
             {% if not app.user %}
             <div class="text-end">
@@ -37,10 +36,14 @@
               <a href="{{ path('register') }}"><button type="button" class="btn button-corail ">{{ "Register" | trans }}</button></a>
             </div>
             {% else %}
-            <span class="badge align-items-center p-2 pe-3 text-light-emphasis bg-secondary-subtle border border-dark-subtle rounded-pill">
-              <img class="rounded-circle me-1" width="24" height="24" src="https://github.com/mdo.png" alt="">
-              {{ app.user.userIdentifier }}
-            </span>
+            <a href="{{ path('profil') }}" >
+              <span class="badge align-items-center p-0 pe-3 text-light-emphasis bg-secondary-subtle border border-dark-subtle rounded-pill">
+                {% if app.user.thumbnail %} <img class="rounded-circle me-1" width="40" height="40"  src="{{ vich_uploader_asset(app.user,'thumbnailFile')}}" alt="">
+                {% else %} <img src="/Fondation/ressources/images/defaultProfil.png" width="40" height="40" > 
+                {% endif %}
+                {{ app.user.userIdentifier }}
+              </span>
+            </a>
             <span class="mx-2"></span>
             <a href="{{ path('logout') }}"><button type="button" class="btn button-corail ">{{ "Logout" | trans }}</button></a>
             {% endif %}

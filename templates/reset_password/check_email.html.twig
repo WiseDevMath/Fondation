@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Password Reset Email Sent{% endblock %}
+
+{% block body %}
+
+    <main class="form-signin w-100 m-auto">
+    <p>
+        {{ 'reinitMail' | trans }} {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>{{ 'ifNotRecieved' | trans }} <a href="{{ path('app_forgot_password_request') }}">{{ 'tryAgain' | trans }} </a>.</p>
+    </main>
+
+{% endblock %}

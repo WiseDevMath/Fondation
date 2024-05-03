@@ -7,9 +7,16 @@ Password: 'Password'
 Remember me: " Remember me"
 Login: "Login"
 Logout: "Logout"
+Save: Save
 Home: Home
 Show: Show
 Hide: Hide
+Reset your password: 'Reset your password'
+Send password reset email: 'Send password reset email'
+Please enter your email: 'Please enter your email'
+ForgottenPassword: "Forgotten password"
+New password: New password
+Repeat Password: Repeat Password
 Validate: Validate
 registrationForm.username: Username
 registrationForm.email: Email
@@ -18,3 +25,19 @@ registrationForm.agreeTerms: Agree terms
 registrationForm.saveButton: Register
 toogle_hidden_label: Hide
 toogle_visible_label: Show
+emailVerified: 'Your email address has been verified.'
+verificationMailSent: 'An email has been sent, you must verify your adress.'
+forgotttePwdMessage: 'Enter your email address, and we will send you a link to reset your password.'
+reinitMail: "If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.This link will expire in"
+ifNotRecieved: "If you don't receive an email please check your spam folder or "
+tryAgain: "Try again"
+Hi: Hi
+reinitVisitLink: 'To reset your password, please visit the following link'
+expireLink: 'This link will expire in'
+Regards: Regards
+confirmEmaiLink: 'Please confirm your email address by clicking the following link'
+Confirm my Email: Confirm my Email
+mailConfirmSubject: 'Please Confirm your Email'
+passwordReinitSubject: 'Your password reset request'
+My Profile: My profile
+profilPhoto: My profile picture

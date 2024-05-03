@@ -2,17 +2,24 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use Serializable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File as File;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable()]
+class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -39,6 +46,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumbnail = null;
+
+    #[Vich\UploadableField(mapping : 'profil', fileNameProperty : 'thumbnail')]
+    #[Assert\Image()]
+    private ?File $thumbnailFile = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -138,4 +158,74 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
+    public function getThumbnailfile(): ?File
+    {
+        return $this->thumbnailFile;
+    }
+
+    public function setThumbnailfile(?File $thumbnailFile): static
+    {
+        $this->thumbnailFile = $thumbnailFile;
+
+        return $this;
+    }
+
+    public function serialize() {
+
+        return serialize(array(
+        $this->id,
+        $this->username,
+        $this->password,
+        $this->email
+        ));
+        
+    }
+        
+    public function unserialize($serialized) {
+    
+    list (
+    $this->id,
+    $this->username,
+    $this->password,
+    $this->email
+    ) = unserialize($serialized);
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+    
 }

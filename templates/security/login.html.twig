@@ -32,7 +32,11 @@
             value="{{ csrf_token('authenticate') }}"
         >
 
-        <div class="checkbox mb-3">
+        <span><a href="{{ path('app_forgot_password_request') }}" >
+           {{'ForgottenPassword' | trans }}
+          </a></span>
+
+        <div class="checkbox pt-2 mb-3">
             <label>
                 <input type="checkbox" name="_remember_me">{{ 'Remember me' | trans }}
             </label>

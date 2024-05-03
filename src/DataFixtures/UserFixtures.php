@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -22,11 +23,15 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         
+
+
         $user= (new User());
         $user->setRoles(['ROLE_ADMIN'])
              ->setEmail('admin@sfr.fr')
              ->setUsername('admin')
-             //->setVerified(true)
+             ->setVerified(true)
+             ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
+             ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
              ->setPassword($this->hasher->hashPassword($user,'admin'));
              //->setApiToken('admin_token');
 
@@ -38,9 +43,11 @@ class UserFixtures extends Fixture
            
             $user= (new User());
             $user->setRoles([])
-                 ->setEmail("user[$i]@sfr.fr")
-                 ->setUsername("user[$i]")
-                 //->setVerified(true)
+                 ->setEmail("user$i@sfr.fr")
+                 ->setUsername("user$i")
+                 ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
+                 ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
+                 ->setVerified(true)
                  ->setPassword($this->hasher->hashPassword($user,'0000'));
                  //->setApiToken("user[$i]");
 

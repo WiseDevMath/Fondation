@@ -3,6 +3,12 @@ body {
     padding-top: 4.5rem;
 }
 
+.form-medium {
+  max-width: 550px;
+  padding: 1rem;
+  background-color: #ffe9a6;
+  border-radius: 10px;
+}
 
 .form-signin {
     max-width: 330px;

@@ -7,10 +7,17 @@ Password: 'Mot de passe'
 Remember me: " Se souvenir de moi"
 Home: Accueil
 Login: "Se Connecter"
+Save: Enregistrer
 Logout: "Se déconnecter"
 Show: Voir
+ForgottenPassword: "Mot de passe oublié"
+Send password reset email: 'Envoyer la demande'
+Reset your password: 'Réinitialiser votre mot de passe'
+Please enter your email: 'Entrez votre email'
 Hide: Masquer
 Validate: Valider
+New password: Nouveau mot de passe
+Repeat Password: Confirmation du mot de passe
 registrationForm.username: "Nom d'utilisateur"
 registrationForm.email: Courriel
 registrationForm.plainPassword: 'Mot de passe'
@@ -18,3 +25,19 @@ registrationForm.agreeTerms: 'Accepter les conditions générales'
 registrationForm.saveButton: "S'enregistrer"
 toogle_hidden_label: Masquer
 toogle_visible_label: Voir
+emailVerified: 'Votre adresse mail a été vérifié.'
+verificationMailSent: 'Un mail a été envoyé, vous devez vérifier votre adresse.'
+forgotttePwdMessage: 'Entrez votre adresse mail, et nous vous enverrons un lien pour réintitilaiser votre mot de passe.'
+reinitMail: "Si un compte correspondant à votre adresse e-mail existe, alors un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans "
+ifNotRecieved: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier de courrier indésirable ou "
+tryAgain: "Ré essayer"
+Hi: Bonjour
+reinitVisitLink: 'Pour réinitialiser votre mot de passe cliquer sur ce lien '
+expireLink: 'Ce lien expire dans '
+Regards: Cordialement
+confirmEmaiLink: 'Merci de confirmer votre adresse mail en cliquant sur ce lien'
+Confirm my Email: Confirmer mon mail
+mailConfirmSubject: 'Merci de confirmer votre email'
+passwordReinitSubject: 'Réinitialisation de mot de passe' 
+My Profile: Mon profil
+profilPhoto: Ma photo de profil
