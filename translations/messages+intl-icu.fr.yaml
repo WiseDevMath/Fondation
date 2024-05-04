@@ -17,6 +17,7 @@ Please enter your email: 'Entrez votre email'
 Hide: Masquer
 Validate: Valider
 New password: Nouveau mot de passe
+Change your password: Changer votre mot de passe
 Repeat Password: Confirmation du mot de passe
 registrationForm.username: "Nom d'utilisateur"
 registrationForm.email: Courriel
@@ -41,3 +42,7 @@ mailConfirmSubject: 'Merci de confirmer votre email'
 passwordReinitSubject: 'Réinitialisation de mot de passe' 
 My Profile: Mon profil
 profilPhoto: Ma photo de profil
+passwordsMustMatch: Les deux mots de passe doivent être indentiques
+minLengthPassword1: Votre mot de passe doit faire au moins
+minLengthPassword2: caractères
+enterPassword: Merci de saisir un mot de passe

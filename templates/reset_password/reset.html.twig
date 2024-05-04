@@ -4,7 +4,9 @@
 
 {% block body %}
 <main class="form-signin w-100 m-auto">
-    <h1 class="h4 mb-3 font-weight-normal">{{ 'Reset your password' | trans }}</h1>
+    {% if type == 'reset' %} <h1 class="h4 mb-3 font-weight-normal">{{ 'Reset your password' | trans }}</h1>
+    {% else %}  <h1 class="h4 mb-3 font-weight-normal">{{ 'Change your password' | trans }}</h1>
+    {% endif %}
     {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
         <button class="btn button-corail">{{ 'Validate' | trans }}</button>

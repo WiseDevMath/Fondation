@@ -17,6 +17,7 @@ Please enter your email: 'Please enter your email'
 ForgottenPassword: "Forgotten password"
 New password: New password
 Repeat Password: Repeat Password
+Change your password: Change your password
 Validate: Validate
 registrationForm.username: Username
 registrationForm.email: Email
@@ -41,3 +42,7 @@ mailConfirmSubject: 'Please Confirm your Email'
 passwordReinitSubject: 'Your password reset request'
 My Profile: My profile
 profilPhoto: My profile picture
+passwordsMustMatch: The password fields must match
+minLengthPassword1: Your password should be at least
+minLengthPassword2: characters
+enterPassword: Please enter a password 
