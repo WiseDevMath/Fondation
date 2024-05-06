@@ -14,9 +14,13 @@
     </head>
 
     <script src="{{asset('bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('sidebars.js')}}"></script>
 
-    <body>
-          
+    <body class="{{ app.user ? 'body-connected' : '' }} ">
+
+      {% if is_granted('ROLE_USER') %}
+      {% endif %}
+                
       <nav class="navbar navbar-expand-md  fixed-top  site-header">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +40,7 @@
               <a href="{{ path('register') }}"><button type="button" class="btn button-corail ">{{ "Register" | trans }}</button></a>
             </div>
             {% else %}
-            <a href="{{ path('profil') }}" >
+            <a href="{{ path('profil') }}" class="href-notextdecoration">
               <span class="badge align-items-center p-0 pe-3 text-light-emphasis bg-secondary-subtle border border-dark-subtle rounded-pill">
                 {% if app.user.thumbnail %} <img class="rounded-circle me-1" width="40" height="40"  src="{{ vich_uploader_asset(app.user,'thumbnailFile')}}" alt="">
                 {% else %} <img src="/Fondation/ressources/images/defaultProfil.png" width="40" height="40" > 
@@ -53,12 +57,50 @@
           </div>
         </div>
     </nav>
-      
-        <main class="container" >
-            <div class="p-3">
+
+    {% if app.user %}
+
+    <div class="flex-shrink-0 h-100 p-3 left-menu fixed-top">
+      <ul class="list-unstyled ps-0">
+
+      {% set precAppFunction = null %}
+      {% for appsubfunction in app.user.profile.appsubfunction|sort((a,b) => a.appfunction.name <=> b.appfunction.name)  %}
+        {% if precAppFunction != appsubfunction.appfunction.id %}
+          
+          <li class="mb-1">
+            {{ ux_icon('bi:' ~ appsubfunction.appfunction.icon , {height: '20px', width: '20px'}) }}
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#{{ appsubfunction.appfunction.id }}-collapse" aria-expanded="false">
+              {{ appsubfunction.appfunction.name }} 
+            </button>
+          </li>
+          <div class="collapse" id="{{ appsubfunction.appfunction.id }}-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            {% for appsubfunctionDetail in app.user.profile.appsubfunction|sort((a,b) => a.appfunction.name <=> b.appfunction.name)  %}
+              
+              {% if appsubfunctionDetail.appfunction.id == appsubfunction.appfunction.id  %}
+
+              <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ appsubfunctionDetail.name }} </a></li>
+
+              {% endif %}
+          
+            {% endfor %}
+            </ul>
+          </div>
+
+          {% set precAppFunction=appsubfunction.appfunction.id %}
+
+        {% endif %}
+      {% endfor %}
+
+      </ul>
+    </div>
+    
+     
+    {% endif %}
+
+        <main>
             {% include 'partiels/flash.html.twig' %}
             {% block body %}{% endblock %}
-            </div>
         </main>
 
         <footer class="footer mt-auto py-2 bg-body-tertiary fixed-bottom site-footer ">

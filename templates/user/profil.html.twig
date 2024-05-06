@@ -16,6 +16,8 @@
     
 </div>
 
+{% if user.profile %} <div class="pb-3"><b>{{ user.profile.name }}</b></div> {% endif %}
+
 <div class="pb-2"><a href="{{ path('changepassword') }}" >
     {{'Change your password' | trans }}
 </a></div>
