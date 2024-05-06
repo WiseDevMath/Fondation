@@ -55,7 +55,7 @@ class UserController extends AbstractController
             $user->setVerified(false);
             $em->flush();
 
-            $this->addFlash('success', $translator->trans('verificationMailSent', []) );
+            $this->addFlash('success', $translator->trans('modificationSaved', []) );
             return $security->login($user, AppAuthenticator::class, 'main');
 
             }
@@ -64,7 +64,7 @@ class UserController extends AbstractController
 
                 $em->flush();
 
-                $this->addFlash('success','Modification Sauvegardée avec Succès');
+                $this->addFlash('success',$translator->trans('modificationSaved', []) );
                 return $this->redirectToRoute('home');
 
             }
