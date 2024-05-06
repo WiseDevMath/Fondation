@@ -18,6 +18,7 @@ ForgottenPassword: "Forgotten password"
 New password: New password
 Repeat Password: Repeat Password
 Change your password: Change your password
+modificationSaved: Modification saved
 Validate: Validate
 registrationForm.username: Username
 registrationForm.email: Email
