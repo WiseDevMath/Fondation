@@ -2,12 +2,14 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Appauthorization;
 use App\Entity\User;
 use App\Entity\Profile;
 use App\Entity\Appfunction;
 use App\Entity\Appsubfunction;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -17,7 +19,8 @@ class UserFixtures extends Fixture
     public const ADMIN = 'ADMIN_USER';
 
     public function __construct(
-        private readonly UserPasswordHasherInterface $hasher
+        private readonly UserPasswordHasherInterface $hasher,
+        private readonly SluggerInterface $slugger
     )
     {
         
@@ -58,6 +61,7 @@ class UserFixtures extends Fixture
 
                 $Appsubfunction = (new Appsubfunction())
                 ->setName($Appsubfonctionname)
+                ->setSlug($this->slugger->slug(strtolower($Appsubfonctionname)))
                 ->setAppfunction($Appfunction)
                 ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
@@ -65,7 +69,9 @@ class UserFixtures extends Fixture
                 $manager->persist($Appsubfunction);
                 $manager->flush();
 
-                $profileAdmin->addAppsubfunction($Appsubfunction);
+                $profileAdmin->addAppauthorization((new Appauthorization())
+                ->setLevel('FULL')
+                ->setAppsubfunction($Appsubfunction));
 
             }
 

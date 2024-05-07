@@ -3,11 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\DTO\AppFunctionSubFunction;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -45,6 +46,59 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     }
 
+    public function findAuthorizations(int $userid): ?array  {
+
+        /*$this->getEntityManager()->createNativeQuery()
+        SELECT f.name,s.name FROM user,appauthorization,appsubfunction AS s,appfunction AS f
+        WHERE user.profile_id=appauthorization.profile_id and
+        appauthorization.appsubfunction_id=s.id and
+        s.appfunction_id=f.id 
+        AND user.id=129
+        ORDER BY f.name ASC,s.name asc */
+
+        return $this->createQueryBuilder('u')
+        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
+        ->where('u.id = :userid')
+        ->leftJoin('u.profile','p')
+        ->leftJoin('p.appauthorizations','a')
+        ->leftJoin('a.appsubfunction','s')
+        ->leftJoin('s.Appfunction','f')
+        ->setParameter('userid',$userid)
+        ->orderBy('f.name','ASC')
+        ->addOrderBy('s.name','ASC')
+        ->getQuery()
+        ->getResult();
+
+
+    }
+
+    public function findAuthorizationByUserAndSubFunction(int $userid,int $subfunctionid): ?AppFunctionSubFunction  {
+
+        /*$this->getEntityManager()->createNativeQuery()
+        SELECT f.name,s.name FROM user,appauthorization,appsubfunction AS s,appfunction AS f
+        WHERE user.profile_id=appauthorization.profile_id and
+        appauthorization.appsubfunction_id=s.id and
+        s.appfunction_id=f.id 
+        AND user.id=129
+        ORDER BY f.name ASC,s.name asc */
+
+        return $this->createQueryBuilder('u')
+        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
+        ->where('u.id = :userid')
+        ->andWhere('s.id = :subfunctionid')
+        ->leftJoin('u.profile','p')
+        ->leftJoin('p.appauthorizations','a')
+        ->leftJoin('a.appsubfunction','s')
+        ->leftJoin('s.Appfunction','f')
+        ->setParameter('userid',$userid)
+        ->setParameter('subfunctionid',$subfunctionid)
+        ->orderBy('f.name','ASC')
+        ->addOrderBy('s.name','ASC')
+        ->getQuery()
+        ->getOneOrNullResult();
+
+
+    }
 
     //    /**
     //     * @return User[] Returns an array of User objects

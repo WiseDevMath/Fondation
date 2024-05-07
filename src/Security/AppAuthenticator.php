@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,9 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $session = $request->getSession();
+        $session->set('AppFunctionSubFunction',$this->userRepository->findAuthorizations($token->getUser()->getId()));
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
              return new RedirectResponse($targetPath);
         }

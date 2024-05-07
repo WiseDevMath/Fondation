@@ -34,15 +34,15 @@ class Profile
     private Collection $users;
 
     /**
-     * @var Collection<int, Appsubfunction>
+     * @var Collection<int, Appauthorization>
      */
-    #[ORM\ManyToMany(targetEntity: Appsubfunction::class, inversedBy: 'profiles')]
-    private Collection $appsubfunction;
+    #[ORM\OneToMany(targetEntity: Appauthorization::class, mappedBy: 'profile', orphanRemoval: true, cascade: ['persist'])]
+    private Collection $appauthorizations;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->appsubfunction = new ArrayCollection();
+        $this->appauthorizations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,26 +129,34 @@ class Profile
     }
 
     /**
-     * @return Collection<int, Appsubfunction>
+     * @return Collection<int, Appauthorization>
      */
-    public function getAppsubfunction(): Collection
+    public function getAppauthorizations(): Collection
     {
-        return $this->appsubfunction;
+        return $this->appauthorizations;
     }
 
-    public function addAppsubfunction(Appsubfunction $appsubfunction): static
+    public function addAppauthorization(Appauthorization $appauthorization): static
     {
-        if (!$this->appsubfunction->contains($appsubfunction)) {
-            $this->appsubfunction->add($appsubfunction);
+        if (!$this->appauthorizations->contains($appauthorization)) {
+            $this->appauthorizations->add($appauthorization);
+            $appauthorization->setProfile($this);
         }
 
         return $this;
     }
 
-    public function removeAppsubfunction(Appsubfunction $appsubfunction): static
+    public function removeAppauthorization(Appauthorization $appauthorization): static
     {
-        $this->appsubfunction->removeElement($appsubfunction);
+        if ($this->appauthorizations->removeElement($appauthorization)) {
+            // set the owning side to null (unless already changed)
+            if ($appauthorization->getProfile() === $this) {
+                $appauthorization->setProfile(null);
+            }
+        }
 
         return $this;
     }
+
+ 
 }

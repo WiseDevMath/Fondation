@@ -48,3 +48,4 @@ passwordsMustMatch: Les deux mots de passe doivent être indentiques
 minLengthPassword1: Votre mot de passe doit faire au moins
 minLengthPassword2: caractères
 enterPassword: Merci de saisir un mot de passe
+unAuthorizedAccess: "Vous n'êtes pas autorisé à cette fonction"

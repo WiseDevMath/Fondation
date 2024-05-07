@@ -5,9 +5,13 @@ namespace App\Entity;
 use App\Repository\AppsubfunctionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppsubfunctionRepository::class)]
+#[UniqueEntity('name')]    
+#[UniqueEntity('slug')]    
+
 class Appsubfunction
 {
     #[ORM\Id]
@@ -32,14 +36,17 @@ class Appsubfunction
     private ?Appfunction $Appfunction = null;
 
     /**
-     * @var Collection<int, Profile>
+     * @var Collection<int, Appauthorization>
      */
-    #[ORM\ManyToMany(targetEntity: Profile::class, mappedBy: 'appsubfunction')]
-    private Collection $profiles;
+    #[ORM\OneToMany(targetEntity: Appauthorization::class, mappedBy: 'appsubfunction', orphanRemoval: true)]
+    private Collection $appauthorizations;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function __construct()
     {
-        $this->profiles = new ArrayCollection();
+        $this->appauthorizations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,29 +115,46 @@ class Appsubfunction
     }
 
     /**
-     * @return Collection<int, Profile>
+     * @return Collection<int, Appauthorization>
      */
-    public function getProfiles(): Collection
+    public function getAppauthorizations(): Collection
     {
-        return $this->profiles;
+        return $this->appauthorizations;
     }
 
-    public function addProfile(Profile $profile): static
+    public function addAppauthorization(Appauthorization $appauthorization): static
     {
-        if (!$this->profiles->contains($profile)) {
-            $this->profiles->add($profile);
-            $profile->addAppsubfunction($this);
+        if (!$this->appauthorizations->contains($appauthorization)) {
+            $this->appauthorizations->add($appauthorization);
+            $appauthorization->setAppsubfunction($this);
         }
 
         return $this;
     }
 
-    public function removeProfile(Profile $profile): static
+    public function removeAppauthorization(Appauthorization $appauthorization): static
     {
-        if ($this->profiles->removeElement($profile)) {
-            $profile->removeAppsubfunction($this);
+        if ($this->appauthorizations->removeElement($appauthorization)) {
+            // set the owning side to null (unless already changed)
+            if ($appauthorization->getAppsubfunction() === $this) {
+                $appauthorization->setAppsubfunction(null);
+            }
         }
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+   
 }
