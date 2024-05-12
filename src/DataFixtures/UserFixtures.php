@@ -42,7 +42,7 @@ class UserFixtures extends Fixture
 
 
         $AppfunctionNames=[['Administration','gear-fill'],['Tableaux de bord','columns'],['Facturation','currency-exchange']];
-        $Appsubfonctionnames['Administration']=['Gestion des utilisateurs','Paramétres généraux'];
+        $Appsubfonctionnames['Administration']=['Gestion des fonctions','Gestion des profils','Gestion des utilisateurs','Paramétres généraux'];
         $Appsubfonctionnames['Tableaux de bord']=['Synthèse journalière','Etat mensuel'];
         $Appsubfonctionnames['Facturation']=['Gestion des devis','Gestion des factures','Echéances'];
         
@@ -76,8 +76,6 @@ class UserFixtures extends Fixture
             }
 
         }
-        
-
 
 
         $user= (new User());

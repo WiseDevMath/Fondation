@@ -3,17 +3,34 @@
 namespace App\Repository;
 
 use App\Entity\Profile;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Profile>
  */
 class ProfileRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Profile::class);
+    }
+
+    public function paginatedProfiles(int $page):PaginationInterface {
+
+        $builder=$this->createQueryBuilder('p')->select('p');
+        return $this->paginator->paginate(
+            $builder,
+            $page,
+            5,
+            [
+                'distinct' => false,
+                'sortFieldAllowList', ['p.id','p.name']
+            ]
+        );
     }
 
     //    /**

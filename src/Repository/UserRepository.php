@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\User;
 use App\DTO\AppFunctionSubFunction;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -15,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, User::class);
     }
@@ -48,14 +50,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findAuthorizations(int $userid): ?array  {
 
-        /*$this->getEntityManager()->createNativeQuery()
-        SELECT f.name,s.name FROM user,appauthorization,appsubfunction AS s,appfunction AS f
-        WHERE user.profile_id=appauthorization.profile_id and
-        appauthorization.appsubfunction_id=s.id and
-        s.appfunction_id=f.id 
-        AND user.id=129
-        ORDER BY f.name ASC,s.name asc */
-
         return $this->createQueryBuilder('u')
         ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
         ->where('u.id = :userid')
@@ -74,14 +68,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function findAuthorizationByUserAndSubFunction(int $userid,int $subfunctionid): ?AppFunctionSubFunction  {
 
-        /*$this->getEntityManager()->createNativeQuery()
-        SELECT f.name,s.name FROM user,appauthorization,appsubfunction AS s,appfunction AS f
-        WHERE user.profile_id=appauthorization.profile_id and
-        appauthorization.appsubfunction_id=s.id and
-        s.appfunction_id=f.id 
-        AND user.id=129
-        ORDER BY f.name ASC,s.name asc */
-
         return $this->createQueryBuilder('u')
         ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
         ->where('u.id = :userid')
@@ -98,6 +84,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getOneOrNullResult();
 
 
+    }
+
+    public function paginatedUsers(int $page):PaginationInterface {
+
+        $builder=$this->createQueryBuilder('u')->select('u','p')->leftJoin('u.profile','p');
+        return $this->paginator->paginate(
+            $builder,
+            $page,
+            5,
+            [
+                'distinct' => false,
+                'sortFieldAllowList', ['u.id','u.username']
+            ]
+        );
     }
 
     //    /**

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des profils{% endblock %}
+{% block body %}
+
+<div id="flash"></div>
+
+
+<div class="container table-container-medium">
+
+    {{ knp_pagination_filter(profiles, {'p.name': 'Name' }) }}
+
+    <table class="table table-hover table-border">
+        <thead class="table-head">
+            <tr>
+                <th class="table-th" >{{ knp_pagination_sortable(profiles,'Id','p.id')}}</th>
+                <th class="table-th" >{{ knp_pagination_sortable(profiles,'Name','p.name')}}</th>
+                <th class="table-th" >Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for profile in profiles %}
+                    <tr id ="row_function_{{ profile.id }}">
+                        <td>{{ profile.id }} </td>
+                        <td>{{ profile.name}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                {% endfor %}
+        
+
+        </tbody>
+
+    </table>
+
+    <!-- VERSION KnpPaginatorBundle -->
+    {{ knp_pagination_render(profiles)}}
+    {{ "Affichage de l'élément" | trans }} {{ profiles.getPaginationData.firstItemNumber }} {{ "à" | trans }}  {{ profiles.getPaginationData.lastItemNumber }}  {{ "sur" | trans }} {{ profiles.getTotalItemCount }} {{ "éléments" | trans }} 
+
+
+
+</div>
+
+
+
+{% endblock %}
