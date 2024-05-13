@@ -5,15 +5,19 @@ body {
 
 }
 
-.btn-primary {
+.btn-action {
+  padding:2px;
+}
+
+.btn-primary,.btn-primary:visited {
   background-color: #FF7848;
   border-color: #FF7848;
 }
 
 .btn-primary:hover, 
 .btn-primary:active,
-.btn-primary:focus,
-.btn-primary:visited{
+.btn-primary:focus
+{
     background-color:  #e06336; 
     border-color: #e06336;
     color:#dddddd;
@@ -22,7 +26,7 @@ body {
 .body-connected {
   padding-left: 220px;
 }
-
+  
 .table-container-medium {
   padding: 2rem;
   max-width: 1000px;

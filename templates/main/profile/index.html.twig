@@ -25,6 +25,17 @@
                         <td>{{ profile.id }} </td>
                         <td>{{ profile.name}}</td>
                         <td>
+
+                        {% if level=='FULL' or level=='EDIT' %}
+                        <div class="d-flex gap-1">
+                            <a class="btn btn-primary btn-sm btn-action" href="{{ path('app_main_edit',{slug:slug,sfid:sfid,id:profile.id }) }}">{{ ux_icon('bi:pencil-square', {height: '22px', width: '22px'}) }}</a>       
+                            <form action="{{ path('app_main_delete',{slug:slug,sfid:sfid,id:profile.id }) }}" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-sm btn-action">{{ ux_icon('bi:trash', {height: '22px', width: '22px'}) }}</button>
+                            </form>   
+                        </div>
+                        {% endif %}
+    
                         </td>
                     </tr>
                 {% endfor %}

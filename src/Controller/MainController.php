@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\DTO\FilterDTO;
 use App\Form\FilterType;
+use App\Entity\Appfunction;
+use App\Form\AppfunctionType;
 use App\Entity\Appsubfunction;
-use App\Repository\AppfunctionRepository;
 use App\Repository\UserRepository;
+use App\Repository\ProfileRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AppfunctionRepository;
 use App\Security\Voter\AppsubfunctionVoter;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\AppsubfunctionRepository;
-use App\Repository\ProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,16 +23,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MainController extends AbstractController
 {
-    #[Route('/main/{slug}-{id}', name: 'app_main',requirements: ['id' => '\d+' ,'slug' => '[a-z0-9-]+'])]
-    public function index(Request $request, string $slug,int $id, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator ): Response
+    #[Route('/main/{slug}-{sfid}/index', name: 'app_main_index',requirements: ['sfid' => '\d+' ,'slug' => '[a-z0-9-]+'])]
+    public function index(Request $request, string $slug,int $sfid, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator ): Response
     {
        
         $userId=$security->getUser()->getId();
-        $Appsubfunctions=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$id);
+        $Appsubfunction=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$sfid);
         // Vérifiez si l'utilisateur a accès en appelant le voter.
         
-        if ($this->isGranted(AppsubfunctionVoter::LIST, $Appsubfunctions))  {
-
+        if ($this->isGranted(AppsubfunctionVoter::LIST, $Appsubfunction))  {
 
             if ($slug=='gestion-des-utilisateurs') {
 
@@ -47,6 +49,9 @@ class MainController extends AbstractController
 
                 return $this->render('main/user/index.html.twig',[
                     'users' => $users,
+                    'level' => $Appsubfunction->level,
+                    'slug' => $slug,
+                    'sfid' => $sfid
                     //'form' => $form
                 ]);
 
@@ -59,7 +64,9 @@ class MainController extends AbstractController
 
                 return $this->render('main/function/index.html.twig',[
                     'functions' => $functions,
-                ]);
+                    'level' => $Appsubfunction->level,
+                    'slug' => $slug,
+                    'sfid' => $sfid                ]);
 
             }   
 
@@ -70,8 +77,9 @@ class MainController extends AbstractController
 
                 return $this->render('main/profile/index.html.twig',[
                     'profiles' => $profiles,
-                ]);
-
+                    'level' => $Appsubfunction->level,
+                    'slug' => $slug,
+                    'sfid' => $sfid                ]);
             }   
             
             return $this->render('main/index.html.twig', [
@@ -84,5 +92,44 @@ class MainController extends AbstractController
             return $this->redirectToRoute('home');
         }
     }
+
+    #[Route('/main/{slug}-{sfid}/edit/{id}', name: 'app_main_edit',methods: ['GET','POST'],requirements: ['sfid' => '\d+' ,'id' => '\d+' ,'slug' => '[a-z0-9-]+'])]
+    public function edit(Request $request, string $slug,int $sfid,int $id, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator, EntityManagerInterface $em ): Response
+    {
+        $userId=$security->getUser()->getId();
+        $Appsubfunction=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$sfid);
+        // Vérifiez si l'utilisateur a accès en appelant le voter.
+        
+        if ($this->isGranted(AppsubfunctionVoter::EDIT, $Appsubfunction))  {
+
+            if ($slug=='gestion-des-fonctions') {
+
+                $Appfunction=$AppfunctionRepository->findOneById($id);
+
+                $form = $this->createForm(AppfunctionType::class, $Appfunction);
+                $form = $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $em->flush();
+                    $this->addFlash('success','Modification Sauvegardée avec Succès');
+                    return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
+                }
+
+                return $this->render('main/function/edit.html.twig',[
+                    'Appfunction' => $Appfunction,
+                    'form' => $form
+                ]);
+        
+            }
+        }
+
+    }
+
+    #[Route('/main/{slug}-{sfid}/delete/{id}', name: 'app_main_delete',methods: ['DELETE'],requirements: ['sfid' => '\d+' ,'id' => '\d+' ,'slug' => '[a-z0-9-]+'])]
+    public function delete(Request $request, string $slug,int $sfid,int $id, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator ): Response
+    {
+        dd('delete');
+    }
+
 
 }

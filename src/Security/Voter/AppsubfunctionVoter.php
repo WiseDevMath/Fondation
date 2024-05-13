@@ -38,6 +38,7 @@ class AppsubfunctionVoter extends Voter
             case self::EDIT:
                 // logic to determine if the user can EDIT
                 // return true or false
+                return $subject->level=='FULL' or $subject->level=='EDIT';
                 break;
 
             case self::VIEW:
@@ -45,7 +46,7 @@ class AppsubfunctionVoter extends Voter
                 // return true or false
                 break;
             case self::LIST:
-                return $subject->level=='FULL' or $subject->level=='VIEW' or $subject->level=='LIST';
+                return $subject->level=='FULL' or $subject->level=='EDIT' or $subject->level=='VIEW' or $subject->level=='LIST';
             break;
         }
 
