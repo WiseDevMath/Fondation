@@ -39,6 +39,9 @@ class Profile
     #[ORM\OneToMany(targetEntity: Appauthorization::class, mappedBy: 'profile', orphanRemoval: true, cascade: ['persist'])]
     private Collection $appauthorizations;
 
+    #[ORM\Column]
+    private ?bool $isSuperadmin = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -154,6 +157,18 @@ class Profile
                 $appauthorization->setProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isSuperadmin(): ?bool
+    {
+        return $this->isSuperadmin;
+    }
+
+    public function setSuperadmin(bool $isSuperadmin): static
+    {
+        $this->isSuperadmin = $isSuperadmin;
 
         return $this;
     }

@@ -21,7 +21,7 @@ class ProfileRepository extends ServiceEntityRepository
 
     public function paginatedProfiles(int $page):PaginationInterface {
 
-        $builder=$this->createQueryBuilder('p')->select('p');
+        $builder=$this->createQueryBuilder('p')->select('p')->where('p.isSuperadmin=0');
         return $this->paginator->paginate(
             $builder,
             $page,
@@ -32,6 +32,25 @@ class ProfileRepository extends ServiceEntityRepository
             ]
         );
     }
+
+    public function findAllProfiles(): ?array {
+
+        return $this->createQueryBuilder('p')->select('p')
+        ->where('p.isSuperadmin=0')
+        ->getQuery()
+        ->getResult();
+
+    }
+
+    public function findOneById($id): ?Profile
+        {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.id = :val')
+                ->setParameter('val', $id)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
 
     //    /**
     //     * @return Profile[] Returns an array of Profile objects

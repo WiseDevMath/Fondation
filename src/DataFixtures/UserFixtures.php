@@ -29,10 +29,25 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         /**********************PROFIL ADMIN *************/
+        $profileSuperAdmin= (new Profile());
+
+        $profileSuperAdmin->setName('Super Administrateur')
+                ->setDescription('Super Administrateur de l\'application')
+                ->setSuperadmin(true)
+                ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
+                ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
+
+        $manager->persist($profileSuperAdmin);
+        $manager->flush();
+
+        /************************************************/
+        
+        /**********************PROFIL ADMIN *************/
         $profileAdmin= (new Profile());
 
         $profileAdmin->setName('Administrateur')
                 ->setDescription('Administrateur de l\'application')
+                ->setSuperadmin(false)
                 ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
 
@@ -42,7 +57,7 @@ class UserFixtures extends Fixture
 
 
         $AppfunctionNames=[['Administration','gear-fill'],['Tableaux de bord','columns'],['Facturation','currency-exchange']];
-        $Appsubfonctionnames['Administration']=['Gestion des fonctions','Gestion des profils','Gestion des utilisateurs','Paramétres généraux'];
+        $Appsubfonctionnames['Administration']=['Fonctions','Profils','Autorisations par profil','Utilisateurs','Paramétres généraux'];
         $Appsubfonctionnames['Tableaux de bord']=['Synthèse journalière','Etat mensuel'];
         $Appsubfonctionnames['Facturation']=['Gestion des devis','Gestion des factures','Echéances'];
         
@@ -66,11 +81,15 @@ class UserFixtures extends Fixture
                 ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
         
+                if ($Appsubfonctionname=='Fonctions') 
+                $Appsubfunction->setSuperadmin(true);
+                else $Appsubfunction->setSuperadmin(false);
+
                 $manager->persist($Appsubfunction);
                 $manager->flush();
 
-                $profileAdmin->addAppauthorization((new Appauthorization())
-                ->setLevel('FULL')
+                $profileSuperAdmin->addAppauthorization((new Appauthorization())
+                ->setLevel('EDIT')
                 ->setAppsubfunction($Appsubfunction));
 
             }
@@ -86,7 +105,7 @@ class UserFixtures extends Fixture
              ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
              ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
              ->setPassword($this->hasher->hashPassword($user,'admin'))
-             ->setProfile($profileAdmin);
+             ->setProfile($profileSuperAdmin);
              //->setApiToken('admin_token');
 
         $this->addReference(self::ADMIN, $user);
@@ -97,6 +116,7 @@ class UserFixtures extends Fixture
 
         $profileUser->setName('Utilisateur standard')
                 ->setDescription('Utilisateur standard de l\'application')
+                ->setSuperadmin(false)
                 ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
 

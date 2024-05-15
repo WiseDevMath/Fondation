@@ -44,6 +44,9 @@ class Appsubfunction
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column]
+    private ?bool $isSuperadmin = null;
+
     public function __construct()
     {
         $this->appauthorizations = new ArrayCollection();
@@ -152,6 +155,18 @@ class Appsubfunction
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function isSuperadmin(): ?bool
+    {
+        return $this->isSuperadmin;
+    }
+
+    public function setSuperadmin(bool $isSuperadmin): static
+    {
+        $this->isSuperadmin = $isSuperadmin;
 
         return $this;
     }

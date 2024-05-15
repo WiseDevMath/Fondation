@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Autorisations par profil{% endblock %}
+
+{% block body %}
+
+<div id="flash"></div>
+
+<div class="container pt-3" >
+
+
+    <table class="table table-border table-sm " >
+        <thead >
+            <tr>
+                <th class="custom-head text-center"></th>
+                {%for profile in profiles %}
+                <th class="custom-head text-center">{{profile.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+                
+            {%for appsubfunction in appsubfunctions %}
+            <tr>
+                <td class="text-center">{{appsubfunction.name}}</td>
+                {%for profile in profiles %}
+
+                    {% set isAuthorized= false %}
+                    {% set level ='' %}
+
+                    {%for authorization in authorizations %}    
+                        {% if authorization.subfunctionId == appsubfunction.id and authorization.profileId == profile.id %}  
+                        {% set isAuthorized= true %}
+                        {% set level= authorization.level %}
+                        {% endif %}
+                    {% endfor %}
+
+
+
+                    {% if level=='VIEW' %}
+                    <td class="text-center custom-td" >
+                            <a href="{{ path('app_main_modify', {slug:slug,sfid:sfid,profileid:profile.id,appsubfunctionid:appsubfunction.id}) }}">
+                                <i id="authorization_{{profile.id}}_{{appsubfunction.id}}" class="bi bi-check-circle-fill check-link-view"></i>
+                            </a>
+                    </td>
+                    {% elseif level=='EDIT' %}
+                     <td class="text-center custom-td" >
+                            <a href="{{ path('app_main_modify', {slug:slug,sfid:sfid,profileid:profile.id,appsubfunctionid:appsubfunction.id}) }}">
+                                <i id="authorization_{{profile.id}}_{{appsubfunction.id}}" class="bi bi-check-circle-fill check-link-edit"></i>
+                            </a>
+                    </td>
+                    {% else %}
+                    <td class="text-center custom-td">
+                        <a href="{{ path('app_main_modify', {slug:slug,sfid:sfid,profileid:profile.id,appsubfunctionid:appsubfunction.id}) }}">
+                            <i id="authorization_{{profile.id}}_{{appsubfunction.id}}" class="bi bi-check-circle check-link-off"></i>
+                        </a>
+                    </td>
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+<script>
+    function updateOutput(element) {
+        var output = element.nextElementSibling; // Sélectionne la balise <output> suivante
+        var value = parseInt(element.value); // Obtient la valeur sélectionnée dans l'élément <input>
+        var text; // Déclare une variable pour stocker le texte à afficher
+    
+        // Utilisez une instruction switch pour déterminer le texte en fonction de la valeur
+        switch (value) {
+            case 0:
+                text = "NON AUTORISE";
+                break;
+            case 1:
+                text = "VISU";
+                break;
+            case 2:
+                text = "MODIF";
+                break;
+            default:
+                text = ""; // Valeur par défaut si aucune correspondance trouvée
+        }
+    
+        output.textContent = text; // Met à jour le contenu de la balise <output> avec le texte approprié
+    }
+    </script>
+
+{% endblock %}

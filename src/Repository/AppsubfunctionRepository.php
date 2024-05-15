@@ -16,6 +16,39 @@ class AppsubfunctionRepository extends ServiceEntityRepository
         parent::__construct($registry, Appsubfunction::class);
     }
 
+    public function findAllAuthorizations(): ?array  {
+
+        return $this->createQueryBuilder('s')
+        ->select('NEW App\\DTO\\AllAuthorizations(s.id,s.name,p.id,p.name,a.id,a.level) ')
+        ->where('s.isSuperadmin=0')
+        ->leftJoin('s.appauthorizations','a')
+        ->leftJoin('a.profile','p')
+        ->orderBy('s.name','ASC')
+        ->getQuery()
+        ->getResult();
+
+    }
+
+    public function findAllAppsubfunctions(): ?array {
+
+        return $this->createQueryBuilder('s')->select('s')
+        ->where('s.isSuperadmin=0')
+        ->getQuery()
+        ->getResult();
+
+    }
+
+    public function findOneById($id): ?Appsubfunction
+        {
+            return $this->createQueryBuilder('s')
+                ->andWhere('s.id = :val')
+                ->setParameter('val', $id)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+
+
     //    /**
     //     * @return Appsubfunction[] Returns an array of Appsubfunction objects
     //     */

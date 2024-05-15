@@ -88,7 +88,9 @@
 
                 {% endif %}
 
-                    <li><a href="{{ path('app_main_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ AppFunctionSubFunction.subfunctionname }} </a></li>
+                    <li>
+                        <a href="{{ path('app_main_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ AppFunctionSubFunction.subfunctionname }}</a>
+                    </li>
 
                 {% set precFunctionId = AppFunctionSubFunction.functionId %}
                 
@@ -108,10 +110,10 @@
      
     {% endif %}
 
-        <main>
-            {% include 'partiels/flash.html.twig' %}
-            {% block body %}{% endblock %}
-        </main>
+    {% include 'partiels/flash.html.twig' %}
+    {% block body %}
+    {% endblock %}
+
 
         <footer class="footer mt-auto py-2 bg-body-tertiary fixed-bottom site-footer ">
           <div class="container">

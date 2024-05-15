@@ -12,14 +12,13 @@ class AppsubfunctionVoter extends Voter
 {
     public const EDIT = 'APPSUBFUNCTION_EDIT';
     public const VIEW = 'APPSUBFUNCTION_VIEW';
-    public const LIST = 'APPSUBFUNCTION_LIST';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         
-        return in_array($attribute, [self::EDIT, self::VIEW, self::LIST])
+        return in_array($attribute, [self::EDIT, self::VIEW ])
         && $subject instanceof \App\DTO\AppFunctionSubFunction ;
 
     }
@@ -38,16 +37,13 @@ class AppsubfunctionVoter extends Voter
             case self::EDIT:
                 // logic to determine if the user can EDIT
                 // return true or false
-                return $subject->level=='FULL' or $subject->level=='EDIT';
+                return $subject->level=='EDIT';
                 break;
-
             case self::VIEW:
                 // logic to determine if the user can VIEW
                 // return true or false
+                return $subject->level=='VIEW';
                 break;
-            case self::LIST:
-                return $subject->level=='FULL' or $subject->level=='EDIT' or $subject->level=='VIEW' or $subject->level=='LIST';
-            break;
         }
 
         return false;

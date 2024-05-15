@@ -16,6 +16,19 @@ class AppauthorizationRepository extends ServiceEntityRepository
         parent::__construct($registry, Appauthorization::class);
     }
 
+    public function findOneByProfileIdAndAppsubfunctionId($profile,$appsubfunction): ?Appauthorization
+    {
+        
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.profile= :profile')
+        ->andWhere('s.appsubfunction = :appsubfunction')
+        ->setParameter('profile', $profile)
+        ->setParameter('appsubfunction', $appsubfunction)
+        ->getQuery()
+        ->getOneOrNullResult();
+
+    }      
+
     //    /**
     //     * @return Appauthorization[] Returns an array of Appauthorization objects
     //     */
