@@ -16,7 +16,7 @@ class Appfunction
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private string $name = '';
 
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $description = null;
@@ -33,7 +33,7 @@ class Appfunction
     /**
      * @var Collection<int, Appsubfunction>
      */
-    #[ORM\OneToMany(targetEntity: Appsubfunction::class, mappedBy: 'Appfunction', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Appsubfunction::class, mappedBy: 'Appfunction', orphanRemoval: true, cascade: ['persist'])]
     private Collection $appsubfunctions;
 
     public function __construct()

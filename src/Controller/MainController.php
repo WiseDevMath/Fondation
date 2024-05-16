@@ -96,7 +96,6 @@ class MainController extends AbstractController
                 $Appsubfunctions=$AppsubfunctionRepository->findAllAppsubfunctions();
                 $authorizations=$AppsubfunctionRepository->findAllAuthorizations();
 
-
                 return $this->render('main/autorisation/index.html.twig',[
                     'authorizations' => $authorizations,
                     'appsubfunctions' => $Appsubfunctions,

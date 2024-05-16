@@ -4,12 +4,13 @@ namespace App\Form;
 
 use App\Entity\Appfunction;
 use Symfony\Component\Form\AbstractType;
+use function Symfony\Component\Translation\t;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use function Symfony\Component\Translation\t;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AppfunctionType extends AbstractType
 {
@@ -18,6 +19,21 @@ class AppfunctionType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('appsubfunctions', CollectionType::class, [
+                'entry_type' => AppsubfunctionType::class,
+                'label'=>false,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'entry_options' => [
+                    'label'=> false
+                ],
+                'attr' => [
+                    'class' => 'appsubfunction-collection',
+                    'data-controller' => 'form-collection',
+                    'data-form-collection-add-label-value' => 'Ajouter une sous fonction',
+                ]
+            ])
             ->add('icon', ChoiceType::class, [
                 'choices' => [
                     'Gear Fill' => 'gear-fill',
@@ -72,13 +88,6 @@ class AppfunctionType extends AbstractType
                 'required' => true,
                 'label' => false
             ])
-            ->add('Save',SubmitType::class, [
-                'label' => t('Save'),
-                'attr'=> [
-                    'class'=>'button-corail ',
-                    'style'=>'margin-top:10px;'
-                ]])
-            ;
         ;
     }
 

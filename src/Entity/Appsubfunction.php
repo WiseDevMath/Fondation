@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AppsubfunctionRepository::class)]
 #[UniqueEntity('name')]    
@@ -20,6 +21,7 @@ class Appsubfunction
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\Column(length: 500, nullable: true)]
@@ -45,7 +47,7 @@ class Appsubfunction
     private ?string $slug = null;
 
     #[ORM\Column]
-    private ?bool $isSuperadmin = null;
+    private ?bool $isSuperadmin = false;
 
     public function __construct()
     {
