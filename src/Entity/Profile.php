@@ -40,7 +40,7 @@ class Profile
     private Collection $appauthorizations;
 
     #[ORM\Column]
-    private ?bool $isSuperadmin = null;
+    private ?bool $isSuperadmin = false;
 
     public function __construct()
     {

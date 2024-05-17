@@ -33,12 +33,24 @@ class ProfileRepository extends ServiceEntityRepository
         );
     }
 
-    public function findAllProfiles(): ?array {
+    public function findAllProfiles(bool $isSuperadmin): ?array {
+
+        if ($isSuperadmin) {
 
         return $this->createQueryBuilder('p')->select('p')
-        ->where('p.isSuperadmin=0')
         ->getQuery()
         ->getResult();
+
+        }
+
+        else   {
+
+            return $this->createQueryBuilder('p')->select('p')
+            ->where('p.isSuperadmin=0')
+            ->getQuery()
+            ->getResult();
+
+        }
 
     }
 

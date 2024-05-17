@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la fonction{% endblock %}
+
+{% block body %}
+
+<main class="form-large w-100 m-auto">
+
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}<br/>
+    {{ form_end(form) }}
+
+    </div>
+
+</main>
+
+
+{% endblock %}

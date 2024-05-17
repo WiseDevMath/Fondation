@@ -8,6 +8,10 @@
 
 <div class="container table-container-medium">
 
+    <p>
+        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer un profil</a>      
+    </p>    
+
     {{ knp_pagination_filter(profiles, {'p.name': 'Name' }) }}
 
     <table class="table table-hover table-border">
@@ -21,7 +25,7 @@
         <tbody>
 
                 {% for profile in profiles %}
-                    <tr id ="row_function_{{ profile.id }}">
+                    <tr id ="row_{{ profile.id }}">
                         <td>{{ profile.id }} </td>
                         <td>{{ profile.name}}</td>
                         <td>

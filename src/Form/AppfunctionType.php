@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Appfunction;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use function Symfony\Component\Translation\t;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AppfunctionType extends AbstractType
 {
+    public function __construct(private FormListenerFactory $listenerFactory)
+    {
+        
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -34,6 +40,7 @@ class AppfunctionType extends AbstractType
                     'data-form-collection-add-label-value' => 'Ajouter une sous fonction',
                 ]
             ])
+            ->addEventListener(FormEvents::POST_SUBMIT,$this->listenerFactory->timestamps())
             ->add('icon', ChoiceType::class, [
                 'choices' => [
                     'Gear Fill' => 'gear-fill',
