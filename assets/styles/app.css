@@ -16,7 +16,8 @@ body {
 
 .btn-primary:hover, 
 .btn-primary:active,
-.btn-primary:focus
+.btn-primary:focus,
+.btn-primary:disabled
 {
     background-color:  #e06336; 
     border-color: #e06336;
@@ -110,10 +111,15 @@ body {
     color:#ffffff;
 }
 
+.button-corail:visited{
+  background-color:  #FF7848; 
+  color:#ffffff;
+}
+
 .button-corail:hover, 
 .button-corail:active,
-.button-corail:focus,
-.button-corail:visited{
+.button-corail:disabled,
+.button-corail:focus{
     background-color:  #e06336; 
     color:#dddddd;
 }
