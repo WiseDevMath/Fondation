@@ -24,8 +24,8 @@
                 
       <nav class="navbar navbar-expand-md  fixed-top  site-header">
         <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <button class="navbar-toggler home-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-house-gear-fill"></i>
           </button>
 
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -57,63 +57,17 @@
         </div>
     </nav>
 
-    {% if app.user %}
-
-      {% set AppFunctionSubFunctions=app.session.get('AppFunctionSubFunction') %}
-
-      <div class="flex-shrink-0 h-100 p-3 left-menu fixed-top">
-        <ul class="list-unstyled ps-0">
-
-          {% set precFunctionId = null %}
-
-          {% for AppFunctionSubFunction in AppFunctionSubFunctions  %}
-
-            {%if AppFunctionSubFunction.functionId != null %}
-            
-                {% if precFunctionId != AppFunctionSubFunction.functionId %}
-
-                  {% if precFunctionId != null %}
-                      </ul>
-                    </div>
-                  {% endif %}
-
-                    <li class="mb-1">
-                      {{ ux_icon('bi:' ~ AppFunctionSubFunction.iconName , {height: '20px', width: '20px'}) }}
-                      <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#{{ AppFunctionSubFunction.functionId }}-collapse" aria-expanded="false">
-                        {{ AppFunctionSubFunction.functionname }} 
-                      </button>
-                    </li>
-                    <div class="collapse" id="{{ AppFunctionSubFunction.functionId }}-collapse">
-                      <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-
-                {% endif %}
-
-                    <li>
-                        <a href="{{ path('app_main_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ AppFunctionSubFunction.subfunctionname }}</a>
-                    </li>
-
-                {% set precFunctionId = AppFunctionSubFunction.functionId %}
-                
-            {% endif %}
-              
-          {% endfor %}
-
-          {% if AppFunctionSubFunctions |length > 0 %}
-            </ul>
-          </div>
-          {% endif %}
-
-
-        </ul>
-      </div>
-      
-     
-    {% endif %}
-
+    {% include 'partiels/leftmenu.html.twig' %}
     {% include 'partiels/flash.html.twig' %}
-    {% block body %}
-    {% endblock %}
 
+    <div id="main">
+      {% if app.user %}
+      <button class="openbtn" onclick="toggleNav()"><i class="bi bi-card-list"></i></button>
+      {% endif %}
+      {% block body %}
+      {% endblock %}
+    </div>
+  
 
         <footer class="footer mt-auto py-2 bg-body-tertiary fixed-bottom site-footer ">
           <div class="container">

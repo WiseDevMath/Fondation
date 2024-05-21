@@ -1,0 +1,71 @@
+{% if app.user %}
+
+    {% set AppFunctionSubFunctions=app.session.get('AppFunctionSubFunction') %}
+
+    <div id="mySidebar" class="sidebar">
+
+        <ul class="ps-1">
+
+            {% set precFunctionId = null %}
+        
+            {% for AppFunctionSubFunction in AppFunctionSubFunctions  %}
+        
+            {%if AppFunctionSubFunction.functionId != null %}
+            
+                {% if precFunctionId != AppFunctionSubFunction.functionId %}
+        
+                    {% if precFunctionId != null %}
+                        </ul>
+                    </div>
+                    {% endif %}
+        
+                    <li class="mb-1">
+                        {{ ux_icon('bi:' ~ AppFunctionSubFunction.iconName , {height: '20px', width: '20px'}) }}
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#{{ AppFunctionSubFunction.functionId }}-collapse" aria-expanded="false">
+                        {{ AppFunctionSubFunction.functionname }} 
+                        </button>
+                    </li>
+                    <div class="collapse" id="{{ AppFunctionSubFunction.functionId }}-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+        
+                {% endif %}
+        
+                    <li>
+                        <a href="{{ path('app_main_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">{{ AppFunctionSubFunction.subfunctionname }}</a>
+                    </li>
+        
+                {% set precFunctionId = AppFunctionSubFunction.functionId %}
+                
+            {% endif %}
+                
+            {% endfor %}
+        
+            {% if AppFunctionSubFunctions |length > 0 %}
+            </ul>
+            </div>
+            {% endif %}
+        
+        
+        </ul>
+        
+    </div>
+
+{% endif %}
+
+  
+<script>
+    
+    function toggleNav() {
+      var sidebar = document.getElementById("mySidebar");
+      var main = document.getElementById("main");
+      
+      if (sidebar.style.width === "220px") {
+        sidebar.style.width = "0";
+        main.style.marginLeft = "0";
+      } else {
+        sidebar.style.width = "220px";
+        main.style.marginLeft = "220px";
+      }
+    }
+</script>
+
