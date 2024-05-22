@@ -3,6 +3,6 @@ vich_uploader:
 
     mappings:
         profil:
-            uri_prefix: /Fondation/images/profils
+            uri_prefix: '/%project_name%/images/profils'
             upload_destination: '%kernel.project_dir%/public/images/profils'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

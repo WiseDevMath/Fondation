@@ -41,10 +41,11 @@
               <a href="{{ path('register') }}"><button type="button" class="btn button-corail ">{{ "Register" | trans }}</button></a>
             </div>
             {% else %}
+            
             <a href="{{ path('profil') }}" class="href-notextdecoration">
               <span class="badge align-items-center p-0 pe-3 text-light-emphasis bg-secondary-subtle border border-dark-subtle rounded-pill">
                 {% if app.user.thumbnail %} <img class="rounded-circle me-1" width="40" height="40"  src="{{ vich_uploader_asset(app.user,'thumbnailFile')}}" alt="">
-                {% else %} <img src="/Fondation/ressources/images/defaultProfil.png" width="40" height="40" > 
+                {% else %} <img src="{{ app.request.basePath }}/ressources/images/defaultProfil.png" width="40" height="40" > 
                 {% endif %}
                 {{ app.user.userIdentifier }}
               </span>
@@ -73,7 +74,7 @@
           <div class="container">
             <logo class="pull-right">
               <a href="{{ path('home') }}" >
-                <img src="/Fondation/ressources/images/LogoWisedev.png" alt="Logo" height="40">
+                <img src="{{ app.request.basePath }}/ressources/images/LogoWisedev.png" alt="Logo" height="40">
               </a>
             </logo>
           </div>
