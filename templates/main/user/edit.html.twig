@@ -6,8 +6,6 @@
 
 <main class="form-medium w-100 m-auto">
 
-<h1 class="h4 mb-3 font-weight-normal">{{ "Modification utilisateur" | trans }}</h1>
-
 <div class="pb-2">
 
     {% if user.thumbnail %} <img class="rounded-circle me-1" width="40" height="40"  src="{{ vich_uploader_asset(user,'thumbnailFile')}}" alt="">
@@ -16,14 +14,14 @@
     
 </div>
 
-{#
-<div class="pb-2"><a href="{{ path('changepassword') }}" >
-    {{'Change your password' | trans }}
+{% if user.email %}
+<div class="pb-2"><a href="{{ path('app_initialize_password', { email:user.email} ) }}" >
+    {{'Send Password initialization Email' | trans }}
 </a></div>
-#}
+{% endif %}
 
 {{ form(form) }}
 
 </main>
 
-{% endblock %}
+{% endblock %}  

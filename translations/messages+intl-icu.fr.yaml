@@ -22,6 +22,7 @@ Verified: Utilisateur actif
 New password: Nouveau mot de passe
 modificationSaved: Modification Sauvegardée avec Succès
 Change your password: Changer votre mot de passe
+Send Password initialization Email: "Envoyer un lien d'initialisation du mot de passe"
 Repeat Password: Confirmation du mot de passe
 registrationForm.username: "Nom d'utilisateur"
 registrationForm.email: Courriel
@@ -34,6 +35,7 @@ emailVerified: 'Votre adresse mail a été vérifié.'
 verificationMailSent: 'Un mail a été envoyé, vous devez vérifier votre adresse.'
 forgotttePwdMessage: 'Entrez votre adresse mail, et nous vous enverrons un lien pour réintitilaiser votre mot de passe.'
 reinitMail: "Si un compte correspondant à votre adresse e-mail existe, alors un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans "
+initMail: "Un e-mail vient d'être envoyé contenant un lien pour que l'utilisateur initialise son mot de passe. Ce lien expirera dans "
 ifNotRecieved: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier de courrier indésirable ou "
 tryAgain: "Ré essayer"
 Hi: Bonjour

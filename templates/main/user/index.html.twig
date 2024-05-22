@@ -7,6 +7,12 @@
 
 <div class="container table-container-medium">
 
+    {% if level=='EDIT' %}
+    <p>
+        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer un utilisateur</a>      
+    </p>    
+    {% endif %}
+
     {{ knp_pagination_filter(users, {'u.username': 'Username','u.email': 'Email' }) }}
 
     <table class="table table-hover table-border">

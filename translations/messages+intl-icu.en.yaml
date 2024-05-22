@@ -16,6 +16,7 @@ Profile: Profile
 Verified: Activated user
 Reset your password: 'Reset your password'
 Send password reset email: 'Send password reset email'
+Send Password initialization Email: "Send Password initialization Email"
 Please enter your email: 'Please enter your email'
 ForgottenPassword: "Forgotten password"
 New password: New password
@@ -33,7 +34,8 @@ toogle_visible_label: Show
 emailVerified: 'Your email address has been verified.'
 verificationMailSent: 'An email has been sent, you must verify your adress.'
 forgotttePwdMessage: 'Enter your email address, and we will send you a link to reset your password.'
-reinitMail: "If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.This link will expire in"
+reinitMail: "If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.This link will expire in "
+initMail: "An email was just sent that contains a link for the user for initializing his password.This link will expire in "
 ifNotRecieved: "If you don't receive an email please check your spam folder or "
 tryAgain: "Try again"
 Hi: Hi

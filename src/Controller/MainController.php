@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\DTO\FilterDTO;
 use App\Entity\Profile;
 use App\Form\FilterType;
 use App\Form\ProfileType;
 use App\Entity\Appfunction;
+use App\Form\AdminUserType;
 use App\Form\AppfunctionType;
 use App\Entity\Appsubfunction;
 use App\Entity\Appauthorization;
-use App\Form\AdminUserType;
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\UserRepository;
 use App\Repository\ProfileRepository;
@@ -27,6 +28,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class MainController extends AbstractController
 {
@@ -121,7 +123,7 @@ class MainController extends AbstractController
     }
 
     #[Route('/main/{slug}-{sfid}/create/', name: 'app_main_create',methods: ['GET','POST'],requirements: ['sfid' => '\d+' ,'slug' => '[a-z0-9-]+'])]
-    public function create(Request $request, string $slug,int $sfid, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator, EntityManagerInterface $em ): Response
+    public function create(Request $request, string $slug,int $sfid, UserPasswordHasherInterface $passwordHasher, UserRepository $UserRepository,AppfunctionRepository $AppfunctionRepository, ProfileRepository $ProfileRepository, Security $security, TranslatorInterface $translator, EntityManagerInterface $em ): Response
     {
         $userId=$security->getUser()->getId();
         $Appsubfunction=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$sfid);
@@ -170,6 +172,39 @@ class MainController extends AbstractController
                     'form' => $form
                 ]);
 
+            }
+
+            if ($slug=='utilisateurs') {
+
+                $User= new User();
+
+                $randomBytes = random_bytes(15);
+                $motdepasse = bin2hex($randomBytes);
+                
+                $User->setPassword(
+                    $passwordHasher->hashPassword(
+                        $User,
+                        $motdepasse
+                    )
+                );
+
+                $form = $this->createForm(AdminUserType::class, $User);
+                $form = $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $em->persist($User);
+                    $em->flush();
+    
+                    $this->addFlash('success','Création réalisée avec Succès');
+    
+                    return $this->redirectToRoute('app_initialize_password',['email'=>$User->getEmail()]);
+                }
+
+                return $this->render('main/user/edit.html.twig',[
+                    'form' => $form,
+                    'user' => $User
+                ]);
+                
             }
 
                     

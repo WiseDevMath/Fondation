@@ -8,9 +8,11 @@
 
 <div class="container table-container-medium">
 
+    {% if level=='EDIT' %}
     <p>
         <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer un profil</a>      
     </p>    
+    {% endif %}
 
     {{ knp_pagination_filter(profiles, {'p.name': 'Name' }) }}
 
