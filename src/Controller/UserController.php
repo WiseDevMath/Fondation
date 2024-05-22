@@ -71,7 +71,7 @@ class UserController extends AbstractController
 
         }
 
-        return $this->render('user/profil.html.twig',[
+        return $this->render('main/user/profil.html.twig',[
             'user' => $user,
             'form' => $form
         ]);

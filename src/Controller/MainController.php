@@ -10,6 +10,7 @@ use App\Entity\Appfunction;
 use App\Form\AppfunctionType;
 use App\Entity\Appsubfunction;
 use App\Entity\Appauthorization;
+use App\Form\AdminUserType;
 use Symfony\UX\Turbo\TurboBundle;
 use App\Repository\UserRepository;
 use App\Repository\ProfileRepository;
@@ -220,6 +221,26 @@ class MainController extends AbstractController
 
                 return $this->render('main/profile/edit.html.twig',[
                     'Profile' => $Profile,
+                    'form' => $form
+                ]);
+        
+            }
+
+            if ($slug=='utilisateurs') {
+
+                $User=$UserRepository->findOneById($id);
+
+                $form = $this->createForm(AdminUserType::class, $User);
+                $form = $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $em->flush();
+                    $this->addFlash('success','Modification Sauvegardée avec Succès');
+                    return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
+                }
+
+                return $this->render('main/user/edit.html.twig',[
+                    'user' => $User,
                     'form' => $form
                 ]);
         

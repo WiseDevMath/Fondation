@@ -14,6 +14,7 @@
             <tr>
                 <th class="table-th" >{{ knp_pagination_sortable(users,'Id','u.id')}}</th>
                 <th class="table-th" >{{ knp_pagination_sortable(users,'Username','u.username')}}</th>
+                <th class="table-th" >Actif</th>
                 <th class="table-th" >Email</th>
                 <th class="table-th" >Profil</th>
                 <th class="table-th" >Actions</th>
@@ -29,6 +30,14 @@
                                 {% else %} <img src="{{ app.request.basePath }}/ressources/images/defaultProfil.png" width="32" height="32" > 
                                 {% endif %}
                             {{ user.username}}</td>
+                       
+                        {% if user.isVerified %}
+                        <td><i class="bi bi-check-circle-fill check-link-edit"></i></td>
+                        {% else %}
+                        <td><i class="bi bi-check-circle-fill check-link-off"></i></td>
+                        {% endif %}
+                        
+
                         <td>{{ user.email}}</td>
                         <td>{{ user.profile.name | default('')}}</td>
                         <td>
