@@ -26,7 +26,7 @@
                         <td>{{ user.id }} </td>
                         <td>
                                 {% if user.thumbnail %} <img class="rounded-circle me-1" width="32" height="32"  src="{{ vich_uploader_asset(user,'thumbnailFile')}}" alt="">
-                                {% else %} <img src="/Fondation/ressources/images/defaultProfil.png" width="32" height="32" > 
+                                {% else %} <img src="{{ app.request.basePath }}/ressources/images/defaultProfil.png" width="32" height="32" > 
                                 {% endif %}
                             {{ user.username}}</td>
                         <td>{{ user.email}}</td>

@@ -24,6 +24,7 @@ body {
 }
 
 .body-connected {
+  padding-top: 3.5rem !important;
 /*  padding-left: 220px; */
 }
   
