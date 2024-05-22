@@ -131,6 +131,8 @@ class MainController extends AbstractController
         
         if ($this->isGranted(AppsubfunctionVoter::EDIT, $Appsubfunction))  {
 
+            $message=$translator->trans('createSuccess', []);
+
             if ($slug=='fonctions') {
 
                 $Appfunction= new Appfunction();
@@ -141,7 +143,7 @@ class MainController extends AbstractController
                     $em->persist($Appfunction);
                     $em->flush();
     
-                    $this->addFlash('success','Création réalisée avec Succès');
+                    $this->addFlash('success', $message);
                     
                     return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
                 }
@@ -163,7 +165,7 @@ class MainController extends AbstractController
                     $em->persist($Profile);
                     $em->flush();
     
-                    $this->addFlash('success','Création réalisée avec Succès');
+                    $this->addFlash('success', $message);
     
                     return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
                 }
@@ -195,7 +197,7 @@ class MainController extends AbstractController
                     $em->persist($User);
                     $em->flush();
     
-                    $this->addFlash('success','Création réalisée avec Succès');
+                    $this->addFlash('success', $message);
     
                     return $this->redirectToRoute('app_initialize_password',['email'=>$User->getEmail()]);
                 }
@@ -221,6 +223,8 @@ class MainController extends AbstractController
         
         if ($this->isGranted(AppsubfunctionVoter::EDIT, $Appsubfunction))  {
 
+            $message=$translator->trans('modifySuccess', []);
+
             if ($slug=='fonctions') {
 
                 $Appfunction=$AppfunctionRepository->findOneById($id);
@@ -230,7 +234,7 @@ class MainController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
                     $em->flush();
-                    $this->addFlash('success','Modification Sauvegardée avec Succès');
+                    $this->addFlash('success', $message);
                     return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
                 }
 
@@ -250,7 +254,7 @@ class MainController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
                     $em->flush();
-                    $this->addFlash('success','Modification Sauvegardée avec Succès');
+                    $this->addFlash('success', $message);
                     return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
                 }
 
@@ -265,19 +269,31 @@ class MainController extends AbstractController
 
                 $User=$UserRepository->findOneById($id);
 
-                $form = $this->createForm(AdminUserType::class, $User);
-                $form = $form->handleRequest($request);
+                if (!$User->getProfile()->isSuperadmin())   {
 
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $em->flush();
-                    $this->addFlash('success','Modification Sauvegardée avec Succès');
+                    $form = $this->createForm(AdminUserType::class, $User);
+                    $form = $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $em->flush();
+                        
+                        $this->addFlash('success', $message);
+                        return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
+                    }
+
+                    return $this->render('main/user/edit.html.twig',[
+                        'user' => $User,
+                        'form' => $form
+                    ]);
+    
+                }
+                else    {
+                    $this->addFlash('success', $translator->trans('unAuthorizedAccess', []) );
                     return $this->redirectToRoute('app_main_index',['slug'=>$slug,'sfid'=>$sfid]);
                 }
 
-                return $this->render('main/user/edit.html.twig',[
-                    'user' => $User,
-                    'form' => $form
-                ]);
+
+
         
             }
         }
@@ -342,13 +358,14 @@ class MainController extends AbstractController
         $Appsubfunction=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$sfid);
         // Vérifiez si l'utilisateur a accès en appelant le voter.
         
-        if ($this->isGranted(AppsubfunctionVoter::EDIT, $Appsubfunction))  {
+        if  ($this->isGranted(AppsubfunctionVoter::EDIT, $Appsubfunction))  {
 
             if ($slug=='fonctions') {
 
             $fonction=$AppfunctionRepository->findOneById($id);
             $fontionId=$fonction->getId();
-            $message='Fonction supprimée avec Succès';
+
+            $message=$translator->trans('functionDeleted', []);
             $em->remove($fonction);
             $em->flush();    
 
@@ -372,15 +389,46 @@ class MainController extends AbstractController
                 $em->remove($profil);
                 $em->flush();
         
-                $message='Profil supprimé avec Succès';
-                if ($request->getPreferredFormat() == TurboBundle::STREAM_FORMAT) {
+                $message=$translator->trans('profileDeleted', []);
+
+                 if ($request->getPreferredFormat() == TurboBundle::STREAM_FORMAT) {
                     $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
                     return $this->render('main/delete.html.twig',['result'=>'success','id'=>$profilId,'message'=>$message]);
                 }
 
             } catch (ForeignKeyConstraintViolationException $e) {
 
-                $message='Suppression impossible le profil est lié à des utilisateurs';
+                $message=$translator->trans('profilDeletionImpossible', []);
+
+
+                if ($request->getPreferredFormat() == TurboBundle::STREAM_FORMAT) {
+                    $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                    return $this->render('main/delete.html.twig',['result'=>'danger','id'=>$profilId,'message'=>$message]);
+                }
+            }
+
+
+          }        
+
+          if ($slug=='utilisateurs') {
+
+            $user=$UserRepository->findOneById($id);
+            $userId=$user->getId();
+
+            try {
+                // Supprimer l'utilisateur'
+                $em->remove($user);
+                $em->flush();
+        
+                $message=$translator->trans('userDeleted', []);
+                if ($request->getPreferredFormat() == TurboBundle::STREAM_FORMAT) {
+                    $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                    return $this->render('main/delete.html.twig',['result'=>'success','id'=>$userId,'message'=>$message]);
+                }
+
+            } catch (ForeignKeyConstraintViolationException $e) {
+
+                $message=$translator->trans('userDeletionImpossible', []);
                 if ($request->getPreferredFormat() == TurboBundle::STREAM_FORMAT) {
                     $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
                     return $this->render('main/delete.html.twig',['result'=>'danger','id'=>$profilId,'message'=>$message]);
@@ -389,6 +437,7 @@ class MainController extends AbstractController
 
 
           }          
+
 
         }
 

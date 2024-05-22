@@ -10,7 +10,7 @@
 
     {% if level=='EDIT' %}
     <p>
-        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer un profil</a>      
+        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">{{ 'Create a profile' | trans }} </a>      
     </p>    
     {% endif %}
 
@@ -20,7 +20,7 @@
         <thead class="table-head">
             <tr>
                 <th class="table-th" >{{ knp_pagination_sortable(profiles,'Id','p.id')}}</th>
-                <th class="table-th" >{{ knp_pagination_sortable(profiles,'Name','p.name')}}</th>
+                <th class="table-th" >{{ knp_pagination_sortable(profiles, 'Name' | trans ,'p.name')}}</th>
                 <th class="table-th" >Actions</th>
             </tr>
         </thead>

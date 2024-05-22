@@ -220,6 +220,11 @@ body {
   background-color: var(--bs-tertiary-bg);
 }
 
+.alert {
+  margin: 30px auto;
+  max-width: 800px;
+  min-width: 650px;
+}
 
 .field-info {
   font-size: 12px;

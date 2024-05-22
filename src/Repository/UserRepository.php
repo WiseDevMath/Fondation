@@ -88,7 +88,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function paginatedUsers(int $page):PaginationInterface {
 
-        $builder=$this->createQueryBuilder('u')->select('u','p')->leftJoin('u.profile','p');
+        $builder=$this->createQueryBuilder('u')
+        ->select('u','p')
+        ->leftJoin('u.profile','p')
+        ->where('p.isSuperadmin=0');        
+
         return $this->paginator->paginate(
             $builder,
             $page,

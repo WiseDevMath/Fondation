@@ -9,7 +9,7 @@
 
     {% if level=='EDIT' %}
     <p>
-        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer un utilisateur</a>      
+        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">{{ 'Create a user' | trans }}</a>      
     </p>    
     {% endif %}
 
@@ -19,17 +19,17 @@
         <thead class="table-head">
             <tr>
                 <th class="table-th" >{{ knp_pagination_sortable(users,'Id','u.id')}}</th>
-                <th class="table-th" >{{ knp_pagination_sortable(users,'Username','u.username')}}</th>
-                <th class="table-th" >Actif</th>
-                <th class="table-th" >Email</th>
-                <th class="table-th" >Profil</th>
-                <th class="table-th" >Actions</th>
+                <th class="table-th" >{{ knp_pagination_sortable(users,'Username' | trans ,'u.username')}}</th>
+                <th class="table-th" >{{ 'Activated' | trans }}</th>
+                <th class="table-th" >{{ 'Email' | trans }}</th>
+                <th class="table-th" >{{ 'Profile' | trans }}</th>
+                <th class="table-th" >{{ 'Actions' | trans }}</th>
             </tr>
         </thead>
         <tbody>
 
                 {% for user in users %}
-                    <tr id ="row_user_{{ user.id }}">
+                    <tr id ="row_{{ user.id }}">
                         <td>{{ user.id }} </td>
                         <td>
                                 {% if user.thumbnail %} <img class="rounded-circle me-1" width="32" height="32"  src="{{ vich_uploader_asset(user,'thumbnailFile')}}" alt="">

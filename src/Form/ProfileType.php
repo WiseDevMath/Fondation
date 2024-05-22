@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use function Symfony\Component\Translation\t;
 
 class ProfileType extends AbstractType
 {
@@ -22,7 +23,7 @@ class ProfileType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('Save',SubmitType::class, ['label' => 'Enregistrer'])
+            ->add('Save',SubmitType::class, ['label' => t('Save')])
             ->addEventListener(FormEvents::POST_SUBMIT,$this->listenerFactory->timestamps())        ;
     }
 

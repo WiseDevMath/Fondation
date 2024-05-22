@@ -4,6 +4,7 @@ Sign in: "Sign in"
 Username or Email: "Username or Email"
 Username: "Username"
 Password: 'Password'
+Name: Name
 Email: Email
 Remember me: " Remember me"
 Login: "Login"
@@ -13,15 +14,24 @@ Home: Home
 Show: Show
 Hide: Hide
 Profile: Profile
+Activated: Activated
+Actions: Actions
+Description: Description
 Verified: Activated user
+Create a function: Create a function
+Create a user: Create a user
 Reset your password: 'Reset your password'
 Send password reset email: 'Send password reset email'
 Send Password initialization Email: "Send Password initialization Email"
 Please enter your email: 'Please enter your email'
+The sub functions: The sub functions
 ForgottenPassword: "Forgotten password"
 New password: New password
 Repeat Password: Repeat Password
 Change your password: Change your password
+Create a profile: Create a profile
+addSubFunction: Add a sub function
+Select an icon: Select an icon
 modificationSaved: Modification saved
 Validate: Validate
 registrationForm.username: Username
@@ -43,6 +53,16 @@ reinitVisitLink: 'To reset your password, please visit the following link'
 expireLink: 'This link will expire in'
 Regards: Regards
 confirmEmaiLink: 'Please confirm your email address by clicking the following link'
+modifySuccess: 'Change successfully saved'
+createSuccess: 'Creation successful'
+profilDeletionImpossible: 'Deletion impossible, this profile is linked to users'
+userDeleted: 'User successfully deleted'
+userDeletionImpossible: "Unable to delete the user"
+functionDeleted: 'Function successfully deleted'
+functionDeletionImpossible: "Unable to delete the Function"
+subfunctionDeleted: 'Sub function successfully deleted'
+subfunctionDeletionImpossible: "Unable to delete the sub function"
+profileDeleted: 'Profile successfully deleted'
 Confirm my Email: Confirm my Email
 mailConfirmSubject: 'Please Confirm your Email'
 passwordReinitSubject: 'Your password reset request'

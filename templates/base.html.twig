@@ -59,12 +59,12 @@
     </nav>
 
     {% include 'partiels/leftmenu.html.twig' %}
-    {% include 'partiels/flash.html.twig' %}
 
     <div id="main">
       {% if app.user %}
       <button class="openbtn" onclick="toggleNav()"><i class="bi bi-card-list"></i></button>
       {% endif %}
+      {% include 'partiels/flash.html.twig' %}
       {% block body %}
       {% endblock %}
     </div>

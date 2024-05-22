@@ -9,7 +9,7 @@
 <div class="container table-container-medium">
 
     <p>
-        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">Créer une fonction</a>      
+        <a class="btn button-corail" href="{{ path('app_main_create',{slug:slug,sfid:sfid }) }}">{{ "Create a function" | trans }} </a>      
     </p>    
 
     {{ knp_pagination_filter(functions, {'f.name': 'Name' }) }}
@@ -18,7 +18,7 @@
         <thead class="table-head">
             <tr>
                 <th class="table-th" >{{ knp_pagination_sortable(functions,'Id','f.id')}}</th>
-                <th class="table-th" >{{ knp_pagination_sortable(functions,'Name','f.name')}}</th>
+                <th class="table-th" >{{ knp_pagination_sortable(functions, 'Name' | trans,'f.name')}}</th>
                 <th class="table-th" >Actions</th>
             </tr>
         </thead>

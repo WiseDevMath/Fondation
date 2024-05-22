@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use function Symfony\Component\Translation\t;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,10 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AppfunctionType extends AbstractType
 {
-    public function __construct(private FormListenerFactory $listenerFactory)
+    public function __construct(private FormListenerFactory $listenerFactory,private TranslatorInterface $translator )
     {
         
-    }
+    }   
     
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,7 +38,7 @@ class AppfunctionType extends AbstractType
                 'attr' => [
                     'class' => 'appsubfunction-collection',
                     'data-controller' => 'form-collection',
-                    'data-form-collection-add-label-value' => 'Ajouter une sous fonction',
+                    'data-form-collection-add-label-value' => $this->translator->trans('addSubFunction', []),
                 ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT,$this->listenerFactory->timestamps())
@@ -91,7 +92,7 @@ class AppfunctionType extends AbstractType
                     'Journal Arrow Up' => 'journal-arrow-up',
                     'Journal Bookmark' => 'journal-bookmark',                    
                 ],
-                'placeholder' => 'Sélectionner une icône', // Optionnel, affiche un texte par défaut
+                'placeholder' => t('Select an icon'), // Optionnel, affiche un texte par défaut
                 'required' => true,
                 'label' => false
             ])

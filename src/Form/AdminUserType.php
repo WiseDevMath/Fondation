@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use function Symfony\Component\Translation\t;
 
 class AdminUserType extends AbstractType
 {
@@ -34,7 +35,7 @@ class AdminUserType extends AbstractType
                 'required' => false, // Le champ n'est pas obligatoire
                 'mapped' => true, // Ne mappe pas directement au champ de l'entité
             ])
-            ->add('Save',SubmitType::class, ['label' => 'Enregistrer'])
+            ->add('Save',SubmitType::class, ['label' => t('Save')])
             ->addEventListener(FormEvents::POST_SUBMIT,$this->listenerFactory->timestamps())        ;
     }
 
