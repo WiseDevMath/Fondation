@@ -39,8 +39,6 @@ class UserFixtures extends Fixture
 
         $manager->persist($profileSuperAdmin);
         $manager->flush();
-
-        /************************************************/
         
         /**********************PROFIL ADMIN *************/
         $profileAdmin= (new Profile());
@@ -56,10 +54,8 @@ class UserFixtures extends Fixture
         /************************************************/
 
 
-        $AppfunctionNames=[['Administration','gear-fill'],['Tableaux de bord','columns'],['Facturation','currency-exchange']];
+        $AppfunctionNames=[['Administration','gear-fill']];
         $Appsubfonctionnames['Administration']=['Fonctions','Profils','Autorisations par profil','Utilisateurs','Paramétres généraux'];
-        $Appsubfonctionnames['Tableaux de bord']=['Synthèse journalière','Etat mensuel'];
-        $Appsubfonctionnames['Facturation']=['Gestion des devis','Gestion des factures','Echéances'];
         
         foreach ($AppfunctionNames as $AppfunctionName ) {
 
@@ -96,11 +92,10 @@ class UserFixtures extends Fixture
 
         }
 
-
         $user= (new User());
         $user->setRoles(['ROLE_ADMIN'])
-             ->setEmail('admin@sfr.fr')
-             ->setUsername('admin')
+             ->setEmail('contact.admin@wisedev.fr')
+             ->setUsername('superadmin')
              ->setVerified(true)
              ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
              ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
@@ -123,7 +118,7 @@ class UserFixtures extends Fixture
         $manager->persist($profileUser);
         $manager->flush();
 
-        for ($i=1 ;$i <=10; $i++) { 
+        /*for ($i=1 ;$i <=10; $i++) { 
            
             $user= (new User());
             $user->setRoles([])
@@ -140,7 +135,7 @@ class UserFixtures extends Fixture
             
             $manager->persist($user);
     
-        }
+        }*/
 
         $manager->flush();
 

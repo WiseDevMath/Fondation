@@ -4,14 +4,15 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Profile;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
+use function Symfony\Component\Translation\t;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use function Symfony\Component\Translation\t;
 
 class AdminUserType extends AbstractType
 {
@@ -29,6 +30,10 @@ class AdminUserType extends AbstractType
             ->add('profile',EntityType::class, [
                 'class' => Profile::class,
                 'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->where('p.isSuperadmin = 0');
+                },
                 // pour faire des radios buttons 'expanded'=> true,
             ])
             ->add('verified', CheckboxType::class, [
