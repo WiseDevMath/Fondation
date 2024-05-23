@@ -94,7 +94,7 @@ class UserFixtures extends Fixture
 
         $user= (new User());
         $user->setRoles(['ROLE_ADMIN'])
-             ->setEmail('contact.admin@wisedev.fr')
+             ->setEmail('contact@wisedev.fr')
              ->setUsername('superadmin')
              ->setVerified(true)
              ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
