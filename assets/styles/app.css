@@ -220,6 +220,10 @@ body {
   background-color: var(--bs-tertiary-bg);
 }
 
+.active-subfunction {
+  background-color: var(--bs-tertiary-bg);
+}
+
 .alert {
   margin: 30px auto;
   max-width: 800px;

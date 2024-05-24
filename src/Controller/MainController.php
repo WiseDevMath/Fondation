@@ -40,7 +40,10 @@ class MainController extends AbstractController
             AppsubfunctionRepository $AppsubfunctionRepository,
             Security $security, TranslatorInterface $translator ): Response
     {
-       
+
+        $session = $request->getSession();
+        $session->set('activeAppSubFunctionId',$sfid);
+
         $userId=$security->getUser()->getId();
         $Appsubfunction=$UserRepository->findAuthorizationByUserAndSubFunction($userId,$sfid);
         // Vérifiez si l'utilisateur a accès en appelant le voter.
