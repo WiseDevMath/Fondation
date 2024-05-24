@@ -23,8 +23,10 @@ class AppsubfunctionType extends AbstractType
     {
         $builder
             ->add('name',TextType::class, [
+                'label'=>false
             ])
             ->add('description',TextType::class, [
+                'label'=>false,
                 'required'=> false,
                 'attr' => [
                 ]

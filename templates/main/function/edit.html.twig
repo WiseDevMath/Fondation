@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'fonction_form_template.html.twig' %}
 
 {% block title %}Modifier la fonction{% endblock %}
 
@@ -24,25 +23,24 @@
     <br/>
     <div class="subform-large">
         <h6>{{ 'The sub functions' | trans}} :</h6>
-        
-        {#<br/>
-        <h6>Les sous fonctions :</h6>
-        <div id="appfunction_appsubfunctions" data-controller="form-collection" data-form-collection-add-label-value="Ajouter ingrédient" data-form-collection-delete-label-value="Supprimer ingrédient"  data-prototype="{{ form_widget(form.appsubfunctions.vars.prototype)|e('html_attr') }}">
-            <div class="row">
-                <div class="col-4">Name</div>
-                <div class="col-8">Description</div>
-            </div>
+
+        <div class="row">
+            <div class="col-4">{{ 'Name' | trans }} </div>
+            <div class="col-8">{{ 'Description' | trans }}</div>
+        </div>
+        <div id="appfunction_appsubfunctions" data-controller="form-collection" data-form-collection-add-label-value="{{'addSubFunction' |trans }}" data-form-collection-delete-label-value="Supprimer ingrédient"  data-prototype="{{ form_widget(form.appsubfunctions.vars.prototype)|e('html_attr') }}">
             {% set numDiv=0 %}
             {% for appsubfunction in form.appsubfunctions %}
-                    
-                    <div id="appfunction_appsubfunctions_{{numDiv}}" class="row">
-                        <div class="col-4">{{ form_row(appsubfunction.name) }}</div>
-                        <div class="col-8">{{ form_row(appsubfunction.description) }}</div>
+                <fieldset class="mb-2" >
+                    <div id="appfunction_appsubfunctions_{{numDiv}}">
+                        <div style="float:left;">{{ form_widget(appsubfunction.name) }}</div>
+                        <div style="float:left;">{{ form_widget(appsubfunction.description) }}</div>
                     </div>
-                    {% set numDiv=numDiv+1 %}
+                </fieldset>
+                {% set numDiv=numDiv+1 %}
             {% endfor %}
         </div>
-        #}
+        
 
         {{ form_end(form) }}
 
