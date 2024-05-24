@@ -94,6 +94,8 @@ class MainController extends AbstractController
                     'level' => $Appsubfunction->level,
                     'slug' => $slug,
                     'sfid' => $sfid                ]);
+
+                    
             }   
             
             if ($slug=='autorisations-par-profil') {

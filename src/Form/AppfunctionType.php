@@ -34,11 +34,6 @@ class AppfunctionType extends AbstractType
                 'allow_delete' => true,
                 'entry_options' => [
                     'label'=> false
-                ],
-                'attr' => [
-                    'class' => 'appsubfunction-collection',
-                    'data-controller' => 'form-collection',
-                    'data-form-collection-add-label-value' => $this->translator->trans('addSubFunction', []),
                 ]
             ])
             ->addEventListener(FormEvents::POST_SUBMIT,$this->listenerFactory->timestamps())

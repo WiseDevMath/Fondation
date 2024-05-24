@@ -10,9 +10,7 @@ export default class extends Controller {
     }
     
     connect() {
-        console.log(this.element)
         this.index = this.element.childElementCount
-        console.log(this.element.childNodes.length)
         const btn= document.createElement('button')
         btn.setAttribute('class','btn btn-secondary btn-form-collection')
         btn.innerText = this.addLabelValue || 'Ajouter un élément'
