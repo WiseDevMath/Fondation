@@ -103,7 +103,7 @@ class MainController extends AbstractController
             
             if ($slug=='autorisations-par-profil') {
             
-                $profiles=$ProfileRepository->findAllProfiles($security->getUser()->getProfile()->isSuperadmin());
+                $profiles=$ProfileRepository->findAllProfiles($security->getUser()->getProfile());
                 $Appsubfunctions=$AppsubfunctionRepository->findAllAppsubfunctions();
                 $authorizations=$AppsubfunctionRepository->findAllAuthorizations();
 

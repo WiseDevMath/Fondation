@@ -33,9 +33,9 @@ class ProfileRepository extends ServiceEntityRepository
         );
     }
 
-    public function findAllProfiles(bool $isSuperadmin): ?array {
+    public function findAllProfiles(Profile $profile): ?array {
 
-        if ($isSuperadmin) {
+        if ($profile->isSuperadmin()) {
 
         return $this->createQueryBuilder('p')->select('p')
         ->getQuery()
@@ -47,6 +47,8 @@ class ProfileRepository extends ServiceEntityRepository
 
             return $this->createQueryBuilder('p')->select('p')
             ->where('p.isSuperadmin=0')
+            ->andWhere('p.id != :val')
+            ->setParameter('val', $profile->getId())
             ->getQuery()
             ->getResult();
 
@@ -59,6 +61,16 @@ class ProfileRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('p')
                 ->andWhere('p.id = :val')
                 ->setParameter('val', $id)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+
+    public function findOneByName($name): ?Profile
+        {
+            return $this->createQueryBuilder('p')
+                ->andWhere('p.name = :val')
+                ->setParameter('val', $name)
                 ->getQuery()
                 ->getOneOrNullResult()
             ;

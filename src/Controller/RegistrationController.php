@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\ProfileRepository;
 use App\Security\AppAuthenticator;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +27,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager, TranslatorInterface $translator ): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher,ProfileRepository $ProfileRepository, Security $security, EntityManagerInterface $entityManager, TranslatorInterface $translator ): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -41,6 +42,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $profileAdmin=$ProfileRepository->findOneByName('Administrateur');
+            $user->setProfile($profileAdmin);
+    
             $entityManager->persist($user);
             $entityManager->flush();
 
