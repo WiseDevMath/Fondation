@@ -86,12 +86,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     }
 
-    public function paginatedUsers(int $page):PaginationInterface {
+    public function paginatedUsers(int $page,int $userId):PaginationInterface {
 
         $builder=$this->createQueryBuilder('u')
         ->select('u','p')
         ->leftJoin('u.profile','p')
-        ->where('p.isSuperadmin=0');        
+        ->where('p.isSuperadmin=0')
+        ->andWhere('u.id != :val')
+        ->setParameter('val', $userId);               
 
         return $this->paginator->paginate(
             $builder,
@@ -102,6 +104,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 'sortFieldAllowList', ['u.id','u.username']
             ]
         );
+
     }
 
     public function findOneById($id): ?User

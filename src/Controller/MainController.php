@@ -62,7 +62,7 @@ class MainController extends AbstractController
                 */
             
                 $currentPage=$request->query->getInt('page',1);
-                $users=$UserRepository->paginatedUsers($currentPage);
+                $users=$UserRepository->paginatedUsers($currentPage,$userId);
 
                 return $this->render('main/user/index.html.twig',[
                     'users' => $users,
