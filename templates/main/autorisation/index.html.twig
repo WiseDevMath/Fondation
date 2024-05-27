@@ -9,7 +9,7 @@
 <div class="container pt-3" >
 
     <div>
-        <i class="bi bi-check-circle-fill check-link-off"></i>Accès non autorisé&nbsp;&nbsp;&nbsp;
+        <i class="bi bi-check-circle check-link-off"></i>Accès non autorisé&nbsp;&nbsp;&nbsp;
         <i class="bi bi-check-circle-fill check-link-view"></i>Accès en lecture&nbsp;&nbsp;&nbsp;
         <i class="bi bi-check-circle-fill check-link-edit"></i>Accès total
     </div>
@@ -70,31 +70,5 @@
     </table>
 
 </div>
-
-
-<script>
-    function updateOutput(element) {
-        var output = element.nextElementSibling; // Sélectionne la balise <output> suivante
-        var value = parseInt(element.value); // Obtient la valeur sélectionnée dans l'élément <input>
-        var text; // Déclare une variable pour stocker le texte à afficher
-    
-        // Utilisez une instruction switch pour déterminer le texte en fonction de la valeur
-        switch (value) {
-            case 0:
-                text = "NON AUTORISE";
-                break;
-            case 1:
-                text = "VISU";
-                break;
-            case 2:
-                text = "MODIF";
-                break;
-            default:
-                text = ""; // Valeur par défaut si aucune correspondance trouvée
-        }
-    
-        output.textContent = text; // Met à jour le contenu de la balise <output> avec le texte approprié
-    }
-    </script>
 
 {% endblock %}
