@@ -26,6 +26,7 @@ class AppfunctionType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
+            ->add('controller')
             ->add('appsubfunctions', CollectionType::class, [
                 'entry_type' => AppsubfunctionType::class,
                 'label'=>false,

@@ -46,9 +46,9 @@ profileDeleted: 'Profil supprimé avec Succès'
 profilDeletionImpossible: 'Suppression impossible le profil est lié à des utilisateurs'
 userDeleted: 'Utilisateur supprimé avec Succès'
 userDeletionImpossible: "Suppression impossible de l'utilisateur"
-functionDeleted: 'Fonction supprimé aec succés'
+functionDeleted: 'Fonction supprimé avec succés'
 functionDeletionImpossible: "Impossible de supprimer cette  fonction"
-subfunctionDeleted: 'Sous fonction supprimé aec succés'
+subfunctionDeleted: 'Sous fonction supprimé avec succés'
 subfunctionDeletionImpossible: "Impossible de supprimer cette sous fonction"
 modifySuccess: 'Modification Sauvegardée avec Succès'
 createSuccess: 'Création réalisée avec Succès'

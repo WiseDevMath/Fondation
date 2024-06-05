@@ -41,7 +41,7 @@
                 {% endif %}
         
                     <li>
-                        <a href="{{ path('app_main_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded {{ activeSubFunctionId == AppFunctionSubFunction.subfunctionId ? 'active-subfunction' : '' }}">{{ AppFunctionSubFunction.subfunctionname }}</a>
+                        <a href="{{ path('app_' ~ AppFunctionSubFunction.functionController ~ '_index', {slug:AppFunctionSubFunction.subfunctionSlug,sfid:AppFunctionSubFunction.subfunctionId}) }}" class="link-body-emphasis d-inline-flex text-decoration-none rounded {{ activeSubFunctionId == AppFunctionSubFunction.subfunctionId ? 'active-subfunction' : '' }}">{{ AppFunctionSubFunction.subfunctionname }}</a>
                     </li>
         
                 {% set precFunctionId = AppFunctionSubFunction.functionId %}

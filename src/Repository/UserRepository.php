@@ -51,7 +51,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAuthorizations(int $userid): ?array  {
 
         return $this->createQueryBuilder('u')
-        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
+        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon, f.name, f.controller, s.id, s.slug, s.name,a.level) ')
         ->where('u.id = :userid')
         ->leftJoin('u.profile','p')
         ->leftJoin('p.appauthorizations','a')
@@ -69,7 +69,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAuthorizationByUserAndSubFunction(int $userid,int $subfunctionid): ?AppFunctionSubFunction  {
 
         return $this->createQueryBuilder('u')
-        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, s.id, s.slug, s.name,a.level) ')
+        ->select('NEW App\\DTO\\AppFunctionSubFunction(f.id, f.icon,  f.name, f.controller, s.id, s.slug, s.name,a.level) ')
         ->where('u.id = :userid')
         ->andWhere('s.id = :subfunctionid')
         ->leftJoin('u.profile','p')

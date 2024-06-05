@@ -62,6 +62,7 @@ class UserFixtures extends Fixture
             $Appfunction = (new Appfunction())
                     ->setName($AppfunctionName[0])
                     ->setIcon($AppfunctionName[1])
+                    ->setController('main')
                     ->setUpdatedAt(\DateTimeImmutable::createFromMutable(new DateTime()))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable(new DateTime()));
             

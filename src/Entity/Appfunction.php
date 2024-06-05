@@ -36,6 +36,9 @@ class Appfunction
     #[ORM\OneToMany(targetEntity: Appsubfunction::class, mappedBy: 'Appfunction', orphanRemoval: true, cascade: ['persist'])]
     private Collection $appsubfunctions;
 
+    #[ORM\Column(length: 255)]
+    private ?string $controller = null;
+
     public function __construct()
     {
         $this->appsubfunctions = new ArrayCollection();
@@ -132,6 +135,18 @@ class Appfunction
                 $appsubfunction->setAppfunction(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getController(): ?string
+    {
+        return $this->controller;
+    }
+
+    public function setController(string $controller): static
+    {
+        $this->controller = $controller;
 
         return $this;
     }

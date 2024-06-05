@@ -9,6 +9,7 @@ class AppFunctionSubFunction
         public readonly ?int  $functionId,
         public readonly ?string $iconName,
         public readonly ?string $functionname,
+        public readonly ?string $functionController,
         public readonly ?int  $subfunctionId,
         public readonly ?string  $subfunctionSlug,
         public readonly ?string $subfunctionname,
