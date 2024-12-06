@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[Vich\Uploadable()]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -187,25 +187,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Seriali
         return $this;
     }
 
-    public function serialize() {
-
-        return serialize(array(
-        $this->id,
-        $this->username,
-        $this->password,
-        $this->email
-        ));
-        
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
+        ];
     }
-        
-    public function unserialize($serialized) {
     
-    list (
-    $this->id,
-    $this->username,
-    $this->password,
-    $this->email
-    ) = unserialize($serialized);
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'];
+        $this->username = $data['username'];
+        $this->password = $data['password'];
+        $this->email = $data['email'];
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
